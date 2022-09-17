@@ -1,0 +1,5 @@
+set makeprg=make\ \-\f\ \M\a\k\e\f\i\l\e\.\b\z\l\ \d\i\s\t\-\l\i\n\u\x\6\4\-\e\d\g\e
+set tags+=~/nsx/tags
+set efm =edge\/iked\/%f:%l:%c:\ error:\ %m
+cscope add ~/nsx/cscope.out ~/nsx
+
