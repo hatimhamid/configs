@@ -3,3 +3,29 @@ set tags+=~/nsx/tags
 set efm =edge\/iked\/%f:%l:%c:\ error:\ %m
 cscope add ~/nsx/cscope.out ~/nsx
 
+
+set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
+nnoremap <leader>cs :cs find 0 <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+"Functions calling this functions
+nnoremap <leader>cc :cs find 3 <C-R>=expand("<cword>")<CR><CR>
+"Files including this file
+nnoremap <leader>ci :cs find 8 %:t<CR><CR>
+"Places where symbol assigned a value
+nnoremap <leader>ca :cs find 9 <C-R>=expand("<cword>")<CR><CR>
+"Functions called by a function
+nnoremap <leader>cd :cs find 2 <C-R>=expand("<cword>")<CR><CR>
+"Find this string
+nnoremap <leader>ct :cs find 4 <C-R>=expand("<cword>")<CR><CR>
+
+function GetCSQF()
+    if empty(getqflist())
+        echom "No results"
+    else
+        execute "normal \<C-o>"
+        execute "call QuickfixToggle()"
+    endif
+endfunction
+
+
+            
+

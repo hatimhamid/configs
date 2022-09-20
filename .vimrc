@@ -1,4 +1,5 @@
 set nocompatible
+set backspace=indent,eol,nostop
 set number
 set shiftwidth=4
 set softtabstop=4
@@ -7,7 +8,6 @@ set cursorline
 set undofile
 set undodir=~/.vim/
 set incsearch
-set smartindent
 set wildmenu
 set wildmode=longest:full
 set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
@@ -16,6 +16,7 @@ set history=1000
 filetype on
 filetype plugin on
 set autoindent
+set smartindent
 syntax on
 set foldmethod=indent
 set wrapmargin=20
@@ -70,6 +71,8 @@ nnoremap <leader>o :let temp=@%<cr>:bufdo bdelete!<cr>:execute 'e' temp<cr>`"
 nnoremap <leader>tt :terminal<cr><c-w>J
 nnoremap <leader>n :next<cr>
 nnoremap <leader>p :prev<cr>
+nnoremap <leader>af :first<cr>
+nnoremap <leader>al :last<cr>
 nnoremap )         ]m
 nnoremap (         [m
 nnoremap <leader>gf :args `git status -s \\| awk '$1 ~ /^M\\|A\\|U/ {print $2}'`<cr>
@@ -84,20 +87,18 @@ noremap j <cr>
 noremap k -
 noremap <c-]> g<c-]>
 
-
-set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
-nnoremap <leader>cc :cs find 0 <C-R>=expand("<cword>")<CR><CR>
-"Functions calling this functions
-nnoremap <leader>cf :cs find 3 <C-R>=expand("<cword>")<CR><CR>
-"Files including this file
-nnoremap <leader>ci :cs find 8 %:t<CR><CR>
-"Places where symbol assigned a value
-nnoremap <leader>cv :cs find 9 <C-R>=expand("<cword>")<CR><CR>
-"Functions called by a function
-nnoremap <leader>ca :cs find 2 <C-R>=expand("<cword>")<CR><CR>
-"Find this string
-nnoremap <leader>cs :cs find 4 <C-R>=expand("<cword>")<CR><CR>
-
+inoremap {<cr> {<cr>}<Esc>O
+inoremap (<cr> (<cr>)<Esc>O
+inoremap [<cr> [<cr>]<Esc>O
+inoremap "<cr> "<cr>"<Esc>O
+inoremap '<cr> '<cr>'<Esc>O
+inoremap `<cr> `<cr>`<Esc>O
+inoremap { {}<Esc>ha
+inoremap ( ()<Esc>ha
+inoremap [ []<Esc>ha
+inoremap " ""<Esc>ha
+inoremap ' ''<Esc>ha
+inoremap ` ``<Esc>ha
 
 function! QuickfixToggle()
     if empty(filter(getwininfo(), 'v:val.quickfix'))
