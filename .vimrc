@@ -82,6 +82,7 @@ nnoremap \         G
 nnoremap <leader>tc :tabclose<cr>
 noremap j <cr>
 noremap k -
+noremap <c-]> g<c-]>
 
 
 set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
