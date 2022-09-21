@@ -61,6 +61,7 @@ nnoremap <Leader>s :Files<CR>
 nnoremap <Leader>d :NERDTreeToggle .<CR>
 nnoremap <Leader>f :NERDTreeFind<CR>
 nnoremap <Leader>g :NERDTreeVCS<CR>
+nnoremap <Leader>j :jumps<CR>
 nnoremap <Leader><space> :cnext<cr>
 nnoremap <Leader>bc :bdelete<cr>
 nnoremap <c-W><c-]> :vsplit<cr><c-]>
@@ -83,8 +84,7 @@ nnoremap <leader>w :w<cr>
 nnoremap <leader>wo :only<cr>
 nnoremap \         G
 nnoremap <leader>tc :tabclose<cr>
-noremap j <cr>
-noremap k -
+nnoremap <leader>t] :vsplit<cr><c-]><c-w>T
 noremap <c-]> g<c-]>
 
 inoremap {<cr> {<cr>}<Esc>O
@@ -100,8 +100,8 @@ inoremap " ""<Esc>ha
 inoremap ' ''<Esc>ha
 inoremap ` ``<Esc>ha
 
-function! QuickfixToggle()
-    if empty(filter(getwininfo(), 'v:val.quickfix'))
+function! QuickfixToggle(open = "")
+    if (a:open ==? 'open' || empty(filter(getwininfo(), 'v:val.quickfix')))
         let g:wid = win_getid()
         copen
         execute "normal \<c-w>J"

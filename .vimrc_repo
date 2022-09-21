@@ -1,28 +1,30 @@
 set makeprg=make\ \-\f\ \M\a\k\e\f\i\l\e\.\b\z\l\ \d\i\s\t\-\l\i\n\u\x\6\4\-\e\d\g\e
 set tags+=~/nsx/tags
+set tags+=~/nsx-edge-ike/tags
 set efm =edge\/iked\/%f:%l:%c:\ error:\ %m
 cscope add ~/nsx/cscope.out ~/nsx
+cscope add ~/nsx-edge-ike/cscope.out ~/nsx-edge-ike
 
 
 set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
 nnoremap <leader>cs :cs find 0 <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
 "Functions calling this functions
-nnoremap <leader>cc :cs find 3 <C-R>=expand("<cword>")<CR><CR>
+nnoremap <leader>cc :cs find 3 <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
 "Files including this file
-nnoremap <leader>ci :cs find 8 %:t<CR><CR>
+nnoremap <leader>ci :cs find 8 %:t<CR><CR>:call GetCSQF()<CR>
 "Places where symbol assigned a value
-nnoremap <leader>ca :cs find 9 <C-R>=expand("<cword>")<CR><CR>
+nnoremap <leader>ca :cs find 9 <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
 "Functions called by a function
-nnoremap <leader>cd :cs find 2 <C-R>=expand("<cword>")<CR><CR>
+nnoremap <leader>cd :cs find 2 <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
 "Find this string
-nnoremap <leader>ct :cs find 4 <C-R>=expand("<cword>")<CR><CR>
+nnoremap <leader>ct :cs find 4 <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
 
-function GetCSQF()
+function! GetCSQF()
     if empty(getqflist())
         echom "No results"
     else
         execute "normal \<C-o>"
-        execute "call QuickfixToggle()"
+        execute "call QuickfixToggle('open')"
     endif
 endfunction
 
