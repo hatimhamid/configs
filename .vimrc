@@ -21,10 +21,10 @@ syntax on
 set foldmethod=indent
 set wrapmargin=20
 set showmatch
-silent autocmd DirChanged * source .vimrc
 set foldminlines=10
 set hlsearch
 set relativenumber
+set so=999
 
 " STATUS LINE ------------------------------------------------------------ {{{
 " Clear status line when vimrc is reloaded.
@@ -51,9 +51,20 @@ call minpac#add('junegunn/fzf.vim')
 call minpac#add('preservim/nerdtree')
 call minpac#add('tpope/vim-fugitive')
 call minpac#add('ycm-core/YouCompleteMe', {'type': 'opt'})
+call minpac#add('wellle/context.vim', {'type': 'opt'})
 
 
 let g:fzf_layout = { 'down': '40%' }
+
+augroup loadLocalVimrc
+    au!
+    silent autocmd DirChanged * source .vimrc
+augroup END
+
+augroup resetResetJumpListPerWindow
+    au!
+    autocmd WinNew * clearjumps
+augroup END
 
 "Remaps"
 let mapleader = " "
@@ -79,6 +90,8 @@ nnoremap (         [m
 nnoremap <leader>gf :args `git status -s \\| awk '$1 ~ /^M\\|A\\|U/ {print $2}'`<cr>
 nnoremap <leader>to :tabonly<cr>
 nnoremap <leader>at :argdo tabedit %<cr><cr>
+nnoremap <leader>aa :argadd %<cr>
+nnoremap <leader>ad :argdele %<cr>
 nnoremap <leader>aw :all<cr>
 nnoremap <leader>w :w<cr>
 nnoremap <leader>wo :only<cr>
@@ -120,4 +133,5 @@ function! LoclistToggle()
         lclose
         call win_gotoid(g:wid)
         unlet g:wid
+    endif
 endfunction

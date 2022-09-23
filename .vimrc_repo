@@ -4,6 +4,8 @@ set tags+=~/nsx-edge-ike/tags
 set efm =edge\/iked\/%f:%l:%c:\ error:\ %m
 cscope add ~/nsx/cscope.out ~/nsx
 cscope add ~/nsx-edge-ike/cscope.out ~/nsx-edge-ike
+set cst
+set csto=1
 
 
 set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
