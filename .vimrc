@@ -51,7 +51,7 @@ call minpac#add('junegunn/fzf.vim')
 call minpac#add('preservim/nerdtree')
 call minpac#add('tpope/vim-fugitive')
 call minpac#add('ycm-core/YouCompleteMe', {'type': 'opt'})
-call minpac#add('wellle/context.vim', {'type': 'opt'})
+call minpac#add('wellle/context.vim')
 
 
 let g:fzf_layout = { 'down': '40%' }
