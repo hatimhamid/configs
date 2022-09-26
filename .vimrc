@@ -26,6 +26,17 @@ set hlsearch
 set relativenumber
 set so=999
 
+" Reference chart of values:
+"   Ps = 0  -> blinking block.
+"   Ps = 1  -> blinking block (default).
+"   Ps = 2  -> steady block.
+"   Ps = 3  -> blinking underline.
+"   Ps = 4  -> steady underline.
+"   Ps = 5  -> blinking bar (xterm).
+"   Ps = 6  -> steady bar (xterm).
+let &t_SI = "\e[5 q"
+let &t_EI = "\e[1 q"
+
 " STATUS LINE ------------------------------------------------------------ {{{
 " Clear status line when vimrc is reloaded.
 set statusline=
@@ -52,7 +63,6 @@ call minpac#add('preservim/nerdtree')
 call minpac#add('tpope/vim-fugitive')
 call minpac#add('ycm-core/YouCompleteMe', {'type': 'opt'})
 call minpac#add('wellle/context.vim')
-
 
 let g:fzf_layout = { 'down': '40%' }
 
