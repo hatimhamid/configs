@@ -1,4 +1,7 @@
 set nocompatible
+set background=dark
+let g:airline_theme='one'
+colorscheme gruvbox
 set backspace=indent,eol,nostop
 set number
 set shiftwidth=4
@@ -20,6 +23,7 @@ set smartindent
 syntax on
 set foldmethod=indent
 set wrapmargin=20
+set wildoptions=pum
 set showmatch
 set foldminlines=10
 set hlsearch
@@ -63,6 +67,9 @@ call minpac#add('preservim/nerdtree')
 call minpac#add('tpope/vim-fugitive')
 call minpac#add('ycm-core/YouCompleteMe', {'type': 'opt'})
 call minpac#add('wellle/context.vim')
+call minpac#add('morhetz/gruvbox')
+call minpac#add('Xuyuanp/nerdtree-git-plugin')
+call minpac#add('rakr/vim-one')
 
 let g:fzf_layout = { 'down': '40%' }
 
@@ -145,3 +152,20 @@ function! LoclistToggle()
         unlet g:wid
     endif
 endfunction
+
+let g:NERDTreeShowHidden = 1
+let g:NERDTreeGitStatusPorcelainVersion=1
+
+" NERDTree Git Plugin
+let g:NERDTreeGitStatusIndicatorMapCustom = {
+    \ "Modified"  : "M",
+    \ "Staged"    : "S",
+    \ "Untracked" : "U",
+    \ "Renamed"   : "R",
+    \ "Unmerged"  : "NM",
+    \ "Deleted"   : "D",
+    \ "Dirty"     : "DR",
+    \ "Clean"     : "C",
+    \ 'Ignored'   : "I",
+    \ "Unknown"   : ""
+    \ }
