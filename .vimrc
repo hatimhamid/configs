@@ -1,7 +1,7 @@
 set nocompatible
-set background=dark
+set background=light
 let g:airline_theme='one'
-colorscheme gruvbox
+colorscheme one
 set backspace=indent,eol,nostop
 set number
 set shiftwidth=4
@@ -29,7 +29,7 @@ set foldminlines=10
 set hlsearch
 set relativenumber
 set so=999
-set termwinkey=<C-l>
+set termwinkey=<C-f>
 
 " Reference chart of values:
 "   Ps = 0  -> blinking block.
@@ -87,37 +87,47 @@ augroup END
 "Remaps"
 let mapleader = " "
 nnoremap <Leader>s :Files<CR>
+
 nnoremap <Leader>d :NERDTreeToggle .<CR>
 nnoremap <Leader>f :NERDTreeFind<CR>
 nnoremap <Leader>g :NERDTreeVCS<CR>
-nnoremap <Leader>j :jumps<CR>
-nnoremap <Leader><space> :cnext<cr>
-nnoremap <Leader>bc :bdelete<cr>
-nnoremap <c-W><c-]> :vsplit<cr><c-]>
+
 nnoremap <Leader><right> :lnext<cr>
-nnoremap <leader>q :call QuickfixToggle()<cr>
+nnoremap <Leader><space> :cnext<cr>
+nnoremap <leader>qq :call QuickfixToggle()<cr>
+nnoremap <leader>qc :colder<cr>
+nnoremap <leader>qn :cnewer<cr>
 nnoremap <leader>l :call LoclistToggle()<cr>
+
+nnoremap <leader>tt :terminal bash<cr><c-f>J
+
+nnoremap )         ]m
+nnoremap (         [m
+nnoremap \         G
+noremap <c-]> g<c-]>
+noremap <c-c> :nohl<cr>
+nnoremap <Leader>j :jumps<CR>
+
+nnoremap <leader>to :tabonly<cr>
+nnoremap <leader>tc :tabclose<cr>
+
 nnoremap <leader>o :let temp=@%<cr>:bufdo bdelete!<cr>:execute 'e' temp<cr>`"
-nnoremap <leader>tt :terminal bash<cr><c-l>J
+nnoremap <Leader>bc :bdelete<cr>
+
 nnoremap <leader>n :next<cr>
 nnoremap <leader>p :prev<cr>
 nnoremap <leader>af :first<cr>
 nnoremap <leader>al :last<cr>
-nnoremap )         ]m
-nnoremap (         [m
-nnoremap <leader>gf :args `git status -s \\| awk '$1 ~ /^M\\|A\\|U/ {print $2}'`<cr>
-nnoremap <leader>to :tabonly<cr>
 nnoremap <leader>at :argdo tabedit %<cr><cr>
+nnoremap <leader>gf :args `git status -s \\| awk '$1 ~ /^M\\|A\\|U/ {print $2}'`<cr>
 nnoremap <leader>aa :argadd %<cr>
 nnoremap <leader>ad :argdele %<cr>
-nnoremap <leader>aw :all<cr>
+
+nnoremap <leader>wa :all<cr>
 nnoremap <leader>w :w<cr>
 nnoremap <leader>wo :only<cr>
-nnoremap \         G
-nnoremap <leader>tc :tabclose<cr>
+nnoremap <c-W><c-]> :vsplit<cr><c-]>
 nnoremap <leader>t] :vsplit<cr><c-]><c-w>T
-noremap <c-]> g<c-]>
-noremap <c-c> :nohl<cr>
 
 inoremap {<cr> {<cr>}<Esc>O
 inoremap (<cr> (<cr>)<Esc>O
