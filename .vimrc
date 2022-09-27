@@ -29,6 +29,7 @@ set foldminlines=10
 set hlsearch
 set relativenumber
 set so=999
+set termwinkey=<C-l>
 
 " Reference chart of values:
 "   Ps = 0  -> blinking block.
@@ -97,7 +98,7 @@ nnoremap <Leader><right> :lnext<cr>
 nnoremap <leader>q :call QuickfixToggle()<cr>
 nnoremap <leader>l :call LoclistToggle()<cr>
 nnoremap <leader>o :let temp=@%<cr>:bufdo bdelete!<cr>:execute 'e' temp<cr>`"
-nnoremap <leader>tt :terminal<cr><c-w>J
+nnoremap <leader>tt :terminal bash<cr><c-l>J
 nnoremap <leader>n :next<cr>
 nnoremap <leader>p :prev<cr>
 nnoremap <leader>af :first<cr>
@@ -116,6 +117,7 @@ nnoremap \         G
 nnoremap <leader>tc :tabclose<cr>
 nnoremap <leader>t] :vsplit<cr><c-]><c-w>T
 noremap <c-]> g<c-]>
+noremap <c-c> :nohl<cr>
 
 inoremap {<cr> {<cr>}<Esc>O
 inoremap (<cr> (<cr>)<Esc>O
