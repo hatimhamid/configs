@@ -29,7 +29,7 @@ set foldminlines=10
 set hlsearch
 set relativenumber
 set so=999
-set termwinkey=<C-f>
+set termwinkey=<C-s>
 
 " Reference chart of values:
 "   Ps = 0  -> blinking block.
@@ -89,6 +89,7 @@ augroup resetResetJumpListPerWindow
 augroup END
 
 "Remaps"
+"CTRL-S,K available"
 let mapleader = " "
 nnoremap <Leader>s :Files<CR>
 
@@ -103,7 +104,7 @@ nnoremap <leader>xc :colder<cr>
 nnoremap <leader>xn :cnewer<cr>
 nnoremap <leader>l :call LoclistToggle()<cr>
 
-nnoremap <leader>tt :terminal bash<cr><c-f>J
+nnoremap <leader>tt :terminal bash<cr><c-s>J
 
 nnoremap )         ]m
 nnoremap (         [m
