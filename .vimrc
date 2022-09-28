@@ -1,7 +1,7 @@
 set nocompatible
-set background=light
+set encoding=UTF-8
+set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
 let g:airline_theme='one'
-colorscheme one
 set backspace=indent,eol,nostop
 set number
 set shiftwidth=4
@@ -74,6 +74,10 @@ call minpac#add('rakr/vim-one')
 
 let g:fzf_layout = { 'down': '40%' }
 
+augroup helpWindow
+    au!
+    autocmd! FileType help wincmd L
+augroup END
 augroup loadLocalVimrc
     au!
     silent autocmd DirChanged * source .vimrc
@@ -91,12 +95,12 @@ nnoremap <Leader>s :Files<CR>
 nnoremap <Leader>d :NERDTreeToggle .<CR>
 nnoremap <Leader>f :NERDTreeFind<CR>
 nnoremap <Leader>g :NERDTreeVCS<CR>
-
+nnoremap <Leader>m :Maps<CR>
 nnoremap <Leader><right> :lnext<cr>
 nnoremap <Leader><space> :cnext<cr>
-nnoremap <leader>qq :call QuickfixToggle()<cr>
-nnoremap <leader>qc :colder<cr>
-nnoremap <leader>qn :cnewer<cr>
+nnoremap <leader>q :call QuickfixToggle()<cr>
+nnoremap <leader>xc :colder<cr>
+nnoremap <leader>xn :cnewer<cr>
 nnoremap <leader>l :call LoclistToggle()<cr>
 
 nnoremap <leader>tt :terminal bash<cr><c-f>J
@@ -104,8 +108,10 @@ nnoremap <leader>tt :terminal bash<cr><c-f>J
 nnoremap )         ]m
 nnoremap (         [m
 nnoremap \         G
-noremap <c-]> g<c-]>
-noremap <c-c> :nohl<cr>
+nnoremap <leader>w :w<cr>
+nnoremap <c-]> g<c-]>
+nnoremap <c-c> :nohl<cr>
+nnoremap <leader>v :call ToggleList()<cr>
 nnoremap <Leader>j :jumps<CR>
 
 nnoremap <leader>to :tabonly<cr>
@@ -124,7 +130,6 @@ nnoremap <leader>aa :argadd %<cr>
 nnoremap <leader>ad :argdele %<cr>
 
 nnoremap <leader>wa :all<cr>
-nnoremap <leader>w :w<cr>
 nnoremap <leader>wo :only<cr>
 nnoremap <c-W><c-]> :vsplit<cr><c-]>
 nnoremap <leader>t] :vsplit<cr><c-]><c-w>T
@@ -162,6 +167,14 @@ function! LoclistToggle()
         lclose
         call win_gotoid(g:wid)
         unlet g:wid
+    endif
+endfunction
+
+function! ToggleList()
+    if (&list == 0)
+        execute "set list"
+    else
+        execute "set nolist"
     endif
 endfunction
 
