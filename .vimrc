@@ -1,7 +1,6 @@
 set nocompatible
 set encoding=UTF-8
 set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
-let g:airline_theme='one'
 set backspace=indent,eol,nostop
 set number
 set shiftwidth=4
@@ -104,7 +103,7 @@ nnoremap <leader>xc :colder<cr>
 nnoremap <leader>xn :cnewer<cr>
 nnoremap <leader>l :call LoclistToggle()<cr>
 
-nnoremap <leader>tt :terminal bash<cr><c-s>J
+nnoremap <leader>tt :terminal ++kill=exit ++close bash<cr><c-s>J
 
 nnoremap )         ]m
 nnoremap (         [m
