@@ -31,6 +31,7 @@ set cst
 set csto=1
 set so=999
 set termwinkey=<C-s>
+set dir=~/swaps
 
 " Reference chart of values:
 "   Ps = 0  -> blinking block.
@@ -121,7 +122,7 @@ nnoremap <c-]> g<c-]>
 nnoremap <c-c> :nohl<cr>
 nnoremap <leader>v :call ToggleList()<cr>
 nnoremap <Leader>j :jumps<CR>
-nnoremap <Leader>h :Helptags<CR>
+nnoremap <f1> :Helptags<CR>
 nnoremap <Leader>bb :BLines<cr>
 
 nnoremap <leader>to :tabonly<cr>
