@@ -104,6 +104,7 @@ nnoremap <leader>xn :cnewer<cr>
 nnoremap <leader>l :call LoclistToggle()<cr>
 
 nnoremap <leader>tt :terminal ++kill=exit ++close bash<cr><c-s>J
+tnoremap <F1> <c-s>N
 
 nnoremap )         ]m
 nnoremap (         [m
@@ -118,7 +119,11 @@ nnoremap <leader>to :tabonly<cr>
 nnoremap <leader>tc :tabclose<cr>
 
 nnoremap <leader>o :let temp=@%<cr>:bufdo bdelete!<cr>:execute 'e' temp<cr>`"
-nnoremap <Leader>bc :bdelete<cr>
+nnoremap <Leader>bd :bdelete<cr>
+nnoremap <leader>bn :bnext<cr>
+nnoremap <leader>bp :bprev<cr>
+nnoremap <leader>bv :sbnext<cr>
+nnoremap <leader>bl :ls<cr>
 
 nnoremap <leader>n :next<cr>
 nnoremap <leader>p :prev<cr>
@@ -128,6 +133,7 @@ nnoremap <leader>at :argdo tabedit %<cr><cr>
 nnoremap <leader>gf :args `git status -s \\| awk '$1 ~ /^M\\|A\\|U/ {print $2}'`<cr>
 nnoremap <leader>aa :argadd %<cr>
 nnoremap <leader>ad :argdele %<cr>
+nnoremap <leader>al :args<cr>
 
 nnoremap <leader>wa :all<cr>
 nnoremap <leader>wo :only<cr>
