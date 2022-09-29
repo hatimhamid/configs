@@ -27,6 +27,8 @@ set showmatch
 set foldminlines=10
 set hlsearch
 set relativenumber
+set cst
+set csto=1
 set so=999
 set termwinkey=<C-s>
 
@@ -162,6 +164,19 @@ inoremap " ""<Esc>ha
 inoremap ' ''<Esc>ha
 inoremap ` ``<Esc>ha
 
+set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
+nnoremap <leader>cs :cs find 0 <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+"Functions calling this functions
+nnoremap <leader>cc :cs find 3 <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+"Files including this file
+nnoremap <leader>ci :cs find 8 %:t<CR><CR>:call GetCSQF()<CR>
+"Places where symbol assigned a value
+nnoremap <leader>ca :cs find 9 <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+"Functions called by a function
+nnoremap <leader>cd :cs find 2 <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+"Find this string
+nnoremap <leader>ct :cs find 4 <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+
 function! QuickfixToggle(open = "")
     if (a:open ==? 'open' || empty(filter(getwininfo(), 'v:val.quickfix')))
         let g:wid = win_getid()
@@ -190,6 +205,15 @@ function! ToggleList()
         execute "set list"
     else
         execute "set nolist"
+    endif
+endfunction
+
+function! GetCSQF()
+    if empty(getqflist())
+        echom "No results"
+    else
+        execute "normal \<C-o>"
+        execute "call QuickfixToggle('open')"
     endif
 endfunction
 
