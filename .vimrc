@@ -91,11 +91,16 @@ augroup END
 "CTRL-S,K available"
 let mapleader = " "
 nnoremap <Leader>s :Files<CR>
+nnoremap <Leader>m :Maps<CR>
+nnoremap <f2> :Commands<cr>
+nnoremap <f3> :BCommits<cr>
+nnoremap <f4> :Commits<cr>
+
 
 nnoremap <Leader>d :NERDTreeToggle .<CR>
 nnoremap <Leader>f :NERDTreeFind<CR>
 nnoremap <Leader>g :NERDTreeVCS<CR>
-nnoremap <Leader>m :Maps<CR>
+
 nnoremap <Leader><right> :lnext<cr>
 nnoremap <Leader><space> :cnext<cr>
 nnoremap <leader>q :call QuickfixToggle()<cr>
@@ -114,6 +119,8 @@ nnoremap <c-]> g<c-]>
 nnoremap <c-c> :nohl<cr>
 nnoremap <leader>v :call ToggleList()<cr>
 nnoremap <Leader>j :jumps<CR>
+nnoremap <Leader>h :Helptags<CR>
+nnoremap <Leader>bb :BLines<cr>
 
 nnoremap <leader>to :tabonly<cr>
 nnoremap <leader>tc :tabclose<cr>
@@ -124,6 +131,7 @@ nnoremap <leader>bn :bnext<cr>
 nnoremap <leader>bp :bprev<cr>
 nnoremap <leader>bv :sbnext<cr>
 nnoremap <leader>bl :ls<cr>
+nnoremap <Leader>bs :History<cr>
 
 nnoremap <leader>n :next<cr>
 nnoremap <leader>p :prev<cr>
@@ -137,6 +145,7 @@ nnoremap <leader>al :args<cr>
 
 nnoremap <leader>wa :all<cr>
 nnoremap <leader>wo :only<cr>
+nnoremap <leader>ws :Windows<cr>
 nnoremap <c-W><c-]> :vsplit<cr><c-]>
 nnoremap <leader>t] :vsplit<cr><c-]><c-w>T
 
