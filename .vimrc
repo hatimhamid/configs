@@ -114,8 +114,8 @@ nnoremap <leader>l :call LoclistToggle()<cr>
 nnoremap <leader>tt :terminal ++kill=exit ++close bash<cr><c-s>J
 tnoremap <F1> <c-s>N
 
-nnoremap )         ]m
-nnoremap (         [m
+nnoremap )         ]]
+nnoremap (         [[
 nnoremap \         G
 nnoremap <leader>w :w<cr>
 nnoremap <c-]> g<c-]>
