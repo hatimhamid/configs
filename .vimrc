@@ -98,6 +98,8 @@ nnoremap <Leader>m :Maps<CR>
 nnoremap <f2> :Commands<cr>
 nnoremap <f3> :BCommits<cr>
 nnoremap <f4> :Commits<cr>
+nnoremap <f5> :ContextToggle<cr>
+nnoremap w<f5> :ContextToggleWindow<cr>
 
 
 nnoremap <Leader>d :NERDTreeToggle .<CR>
