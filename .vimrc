@@ -46,19 +46,19 @@ let &t_EI = "\e[1 q"
 
 " STATUS LINE ------------------------------------------------------------ {{{
 " Clear status line when vimrc is reloaded.
-set statusline=
-
-" Status line left side.
-set statusline+=\ %{FugitiveHead(7)}\ %F\ %{mode()}\ %{ObsessionStatus('','notrack')}\ %M\ %Y\ %R
-
-" Use a divider to separate the left side from the right side.
-set statusline+=%=
-
-" Status line right side.
-set statusline+=\ %b\ %l:%c\ %p%%
-
-" Show the status on the second to last line.
-set laststatus=2
+"set statusline=
+"
+"" Status line left side.
+"set statusline+=\ %{FugitiveHead(7)}\ %F\ %{mode()}\ %{ObsessionStatus('','notrack')}\ %M\ %Y\ %R
+"
+"" Use a divider to separate the left side from the right side.
+"set statusline+=%=
+"
+"" Status line right side.
+"set statusline+=\ %%10=%b\ Lines\=%L\ %l:%c\ %p%%
+"
+"" Show the status on the second to last line.
+"set laststatus=2
 
 packadd minpac
 call minpac#init()
@@ -73,6 +73,9 @@ call minpac#add('wellle/context.vim')
 call minpac#add('morhetz/gruvbox')
 call minpac#add('Xuyuanp/nerdtree-git-plugin')
 call minpac#add('rakr/vim-one')
+call minpac#add('vim-airline/vim-airline')
+call minpac#add('vim-airline/vim-airline-themes')
+call minpac#add('enricobacis/vim-airline-clock')
 
 let g:fzf_layout = { 'down': '40%' }
 
@@ -98,13 +101,13 @@ nnoremap <Leader>m :Maps<CR>
 nnoremap <f2> :Commands<cr>
 nnoremap <f3> :BCommits<cr>
 nnoremap <f4> :Commits<cr>
+nnoremap <Leader>g :GFiles<CR>
 nnoremap <f5> :ContextToggle<cr>
 nnoremap w<f5> :ContextToggleWindow<cr>
 
 
 nnoremap <Leader>d :NERDTreeToggle .<CR>
 nnoremap <Leader>f :NERDTreeFind<CR>
-nnoremap <Leader>g :NERDTreeVCS<CR>
 
 nnoremap <Leader><right> :lnext<cr>
 nnoremap <Leader><space> :cnext<cr>
@@ -125,10 +128,10 @@ nnoremap <c-c> :nohl<cr>
 nnoremap <leader>v :call ToggleList()<cr>
 nnoremap <Leader>j :jumps<CR>
 nnoremap <f1> :Helptags<CR>
-nnoremap <Leader>bb :BLines<cr>
 
 nnoremap <leader>to :tabonly<cr>
 nnoremap <leader>tc :tabclose<cr>
+nnoremap <leader>tn :tabnew<cr>
 
 nnoremap <leader>o :let temp=@%<cr>:bufdo bdelete!<cr>:execute 'e' temp<cr>`"
 nnoremap <Leader>bd :bdelete<cr>
@@ -137,6 +140,7 @@ nnoremap <leader>bp :bprev<cr>
 nnoremap <leader>bv :sbnext<cr>
 nnoremap <leader>bl :ls<cr>
 nnoremap <Leader>bs :History<cr>
+nnoremap <Leader>bb :BLines<cr>
 
 nnoremap <leader>n :next<cr>
 nnoremap <leader>p :prev<cr>

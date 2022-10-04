@@ -12,4 +12,4 @@ function updateCScope() {
     rm cscope.files
 }
 
-
+TZ='Asia/Kolkata'; export TZ
