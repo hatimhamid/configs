@@ -76,6 +76,7 @@ call minpac#add('rakr/vim-one')
 call minpac#add('vim-airline/vim-airline')
 call minpac#add('vim-airline/vim-airline-themes')
 call minpac#add('enricobacis/vim-airline-clock')
+call minpac#add('kien/ctrlp.vim')
 
 let g:fzf_layout = { 'down': '40%' }
 
