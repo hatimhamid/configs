@@ -99,8 +99,9 @@ augroup END
 let mapleader = " "
 nnoremap <Leader>s :CtrlPCurWD<CR>
 nnoremap <C-p> :CtrlPCurFile<CR>
-nnoremap <Leader>p :CtrlPRoot<CR>
+nnoremap <Leader>r :CtrlPRoot<CR>
 let g:ctrlp_by_filename = 1
+let g:ctrlp_working_path_mode = 'c'
 let g:ctrlp_arg_map = 0
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_max_files = 0
