@@ -76,7 +76,7 @@ call minpac#add('rakr/vim-one')
 call minpac#add('vim-airline/vim-airline')
 call minpac#add('vim-airline/vim-airline-themes')
 call minpac#add('enricobacis/vim-airline-clock')
-call minpac#add('kien/ctrlp.vim')
+call minpac#add('ctrlpvim/ctrlp.vim')
 
 let g:fzf_layout = { 'down': '40%' }
 
@@ -97,15 +97,21 @@ augroup END
 "Remaps"
 "CTRL-S,K available"
 let mapleader = " "
-nnoremap <Leader>s :Files<CR>
+nnoremap <Leader>s :CtrlPCurWD<CR>
+nnoremap <C-p> :CtrlPCurFile<CR>
+nnoremap <Leader>p :CtrlPRoot<CR>
+let g:ctrlp_by_filename = 1
+let g:ctrlp_arg_map = 0
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_max_files = 0
+
+
 nnoremap <Leader>m :Maps<CR>
 nnoremap <f2> :Commands<cr>
 nnoremap <f3> :BCommits<cr>
 nnoremap <f4> :Commits<cr>
-nnoremap <Leader>g :GFiles<CR>
 nnoremap <f5> :ContextToggle<cr>
 nnoremap w<f5> :ContextToggleWindow<cr>
-
 
 nnoremap <Leader>d :NERDTreeToggle .<CR>
 nnoremap <Leader>f :NERDTreeFind<CR>
