@@ -141,7 +141,7 @@ nnoremap <leader>to :tabonly<cr>
 nnoremap <leader>tc :tabclose<cr>
 nnoremap <leader>tn :tabnew<cr>
 
-nnoremap <leader>o :let temp=@%<cr>:bufdo bdelete!<cr>:execute 'e' temp<cr>`"
+nnoremap <leader>bo :let temp=@%<cr>:bufdo bdelete!<cr>:execute 'e' temp<cr>`"
 nnoremap <Leader>bd :bdelete<cr>
 nnoremap <leader>bn :bnext<cr>
 nnoremap <leader>bp :bprev<cr>
