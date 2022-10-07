@@ -77,6 +77,7 @@ call minpac#add('vim-airline/vim-airline')
 call minpac#add('vim-airline/vim-airline-themes')
 call minpac#add('enricobacis/vim-airline-clock')
 call minpac#add('ctrlpvim/ctrlp.vim')
+call minpac#add('yssl/QFEnter')
 
 let g:fzf_layout = { 'down': '40%' }
 
@@ -178,6 +179,12 @@ inoremap [ []<Esc>ha
 inoremap " ""<Esc>ha
 inoremap ' ''<Esc>ha
 inoremap ` ``<Esc>ha
+
+let g:qfenter_keymap = {}
+let g:qfenter_keymap.open = ['<CR>']
+let g:qfenter_keymap.vopen = ['<C-v>']
+let g:qfenter_keymap.hopen = ['<C-x>']
+let g:qfenter_keymap.topen = ['<C-t>']
 
 set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
 nnoremap <leader>cs :cs find 0 <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
