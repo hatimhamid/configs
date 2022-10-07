@@ -27,6 +27,8 @@ set showmatch
 set foldminlines=10
 set hlsearch
 set relativenumber
+colorscheme gruvbox
+set background=dark
 set cst
 set csto=1
 set so=999
@@ -185,6 +187,7 @@ let g:qfenter_keymap.open = ['<CR>']
 let g:qfenter_keymap.vopen = ['<C-v>']
 let g:qfenter_keymap.hopen = ['<C-x>']
 let g:qfenter_keymap.topen = ['<C-t>']
+let g:qfenter_exclude_filetypes = ['nerdtree']
 
 set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
 nnoremap <leader>cs :cs find 0 <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
