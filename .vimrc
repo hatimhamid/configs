@@ -189,6 +189,8 @@ inoremap " ""<Esc>ha
 inoremap ' ''<Esc>ha
 inoremap ` ``<Esc>ha
 
+cnoremap w!! w !sudo tee > /dev/null %
+
 let g:qfenter_keymap = {}
 let g:qfenter_keymap.open = ['<CR>']
 let g:qfenter_keymap.vopen = ['<C-v>']
