@@ -143,6 +143,9 @@ nnoremap <f1> :Helptags<CR>
 nnoremap <leader>to :tabonly<cr>
 nnoremap <leader>tc :tabclose<cr>
 nnoremap <leader>tn :tabnew<cr>
+nnoremap <leader>ta :tabnew<cr>: argdo tabedit<cr><cr>:tabclose<cr>
+nnoremap <leader>tb :tab split<cr>
+nnoremap <leader>t] :vsplit<cr><c-w>T<c-]>
 
 nnoremap <leader>bo :let temp=@%<cr>:bufdo bdelete!<cr>:execute 'e' temp<cr>`"
 nnoremap <Leader>bd :bdelete<cr>
@@ -162,12 +165,15 @@ nnoremap <leader>gf :args `git status -s \\| awk '$1 ~ /^M\\|A\\|U/ {print $2}'`
 nnoremap <leader>aa :argadd %<cr>
 nnoremap <leader>ad :argdele %<cr>
 nnoremap <leader>al :args<cr>
+nnoremap <leader>ac :%argdelete<cr>
+nnoremap <leader>aw :arglocal<cr>
 
 nnoremap <leader>wa :all<cr>
 nnoremap <leader>wo :only<cr>
-nnoremap <leader>ws :Windows<cr>
+nnoremap <leader>wf :Windows<cr>
 nnoremap <c-W><c-]> :vsplit<cr><c-]>
-nnoremap <leader>t] :vsplit<cr><c-]><c-w>T
+nnoremap <leader>ws :let g:temp_win_info=winsaveview()<cr>: let g:temp_buf_nr=bufnr()<cr><C-w>c
+nnoremap <leader>wr :vsplit<cr>:execute "e" " #"..g:temp_buf_nr<cr>: call winrestview(g:temp_win_info)<cr>
 
 inoremap {<cr> {<cr>}<Esc>O
 inoremap (<cr> (<cr>)<Esc>O
@@ -187,6 +193,10 @@ let g:qfenter_keymap.open = ['<CR>']
 let g:qfenter_keymap.vopen = ['<C-v>']
 let g:qfenter_keymap.hopen = ['<C-x>']
 let g:qfenter_keymap.topen = ['<C-t>']
+let g:qfenter_keymap.open_keep = ['g<CR>']
+let g:qfenter_keymap.vopen_keep = ['g<C-v>']
+let g:qfenter_keymap.hopen_keep = ['g<C-x>']
+let g:qfenter_keymap.topen_keep = ['g<C-t>']
 let g:qfenter_exclude_filetypes = ['nerdtree']
 
 set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
