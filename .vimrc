@@ -145,6 +145,7 @@ nnoremap <leader>tc :tabclose<cr>
 nnoremap <leader>tn :tabnew<cr>
 nnoremap <leader>ta :tabnew<cr>: argdo tabedit<cr><cr>:tabclose<cr>
 nnoremap <leader>tb :tab split<cr>
+nnoremap <leader>tx :tab all<cr>
 nnoremap <leader>t] :vsplit<cr><c-w>T<c-]>
 
 nnoremap <leader>bo :let temp=@%<cr>:bufdo bdelete!<cr>:execute 'e' temp<cr>`"
