@@ -92,7 +92,7 @@ augroup helpWindow
 augroup END
 augroup loadLocalVimrc
     au!
-    silent autocmd DirChanged * source .vimrc
+    autocmd DirChanged * silent! source .vimrc
 augroup END
 
 augroup resetResetJumpListPerWindow
