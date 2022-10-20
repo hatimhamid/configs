@@ -27,8 +27,8 @@ set showmatch
 set foldminlines=10
 set hlsearch
 set relativenumber
-colorscheme gruvbox
-set background=dark
+""colorscheme gruvbox
+""set background=dark
 set cst
 set csto=1
 set so=999
@@ -82,7 +82,10 @@ call minpac#add('ctrlpvim/ctrlp.vim')
 call minpac#add('yssl/QFEnter')
 
 let g:fzf_layout = { 'down': '40%' }
-
+augroup QFSettings
+    au!
+    autocmd  QuickFixCmdPre * call AddToTagStack()
+augroup END
 augroup helpWindow
     au!
     autocmd! FileType help wincmd L
@@ -130,11 +133,13 @@ nnoremap <leader>l :call LoclistToggle()<cr>
 nnoremap <leader>tt :terminal ++kill=exit ++close bash<cr><c-s>J
 tnoremap <F1> <c-s>N
 
-nnoremap )         ]]
-nnoremap (         [[
-nnoremap \         G
+nnoremap \\         G
+nnoremap \t         :tags<cr>
+nnoremap <c-q>      :tag<cr>
 nnoremap <leader>w :w<cr>
 nnoremap <c-]> g<c-]>
+nnoremap <c-)> ]]
+nnoremap <c-(> [[
 nnoremap <c-c> :nohl<cr>
 nnoremap <leader>v :call ToggleList()<cr>
 nnoremap <Leader>j :jumps<CR>
@@ -238,6 +243,15 @@ function! LoclistToggle()
     endif
 endfunction
 
+function! AddToTagStack()
+    let tag = expand('<cword>')
+    let item = {'bufnr': bufnr(), 'from': getpos('.'), 'tagname': tag}
+    let winid = win_getid()
+    let stack = gettagstack(winid)
+    let stack['items'] = [item]
+    call settagstack(winid, stack, 't')
+endfunction
+
 function! ToggleList()
     if (&list == 0)
         execute "set list"
@@ -251,6 +265,7 @@ function! GetCSQF()
         echom "No results"
     else
         execute "normal \<C-o>"
+        execute "normal zz"
         execute "call QuickfixToggle('open')"
     endif
 endfunction
