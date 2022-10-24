@@ -13,3 +13,4 @@ function updateCScope() {
 }
 
 TZ='Asia/Kolkata'; export TZ
+export PS1="\h:\u \$ \W \t "
