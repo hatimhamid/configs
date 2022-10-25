@@ -245,11 +245,40 @@ endfunction
 
 function! AddToTagStack()
     let tag = expand('<cword>')
-    let item = {'bufnr': bufnr(), 'from': getpos('.'), 'tagname': tag}
+    let g:p_item = {'bufnr': bufnr(), 'from': [bufnr(), line('.'), col('.'), 0], 'tagname': tag}
+    "let winid = win_getid()
+    "let stack = gettagstack(winid)
+    "let stack['items'] = [item]
+    "call settagstack(winid, stack, 't')
+endfunction
+
+function! g:RecoverTagStack()
     let winid = win_getid()
     let stack = gettagstack(winid)
-    let stack['items'] = [item]
+    let stack['items'] = [g:p_item]
+
+    ""if stack['length'] == stack['curidx']
+    ""    echom "length equal curidx"
+    ""    let action = 'r'
+    ""    let stack['items'][stack['curidx']-1] = g:p_item
+    ""elseif stack['length'] > stack['curidx']
+    ""    let action = 'r'
+    ""    if stack['curidx'] > 1
+    ""        echom "length greater curidx"
+    ""        let stack['items'] = add(stack['items'][:stack['curidx']-2], g:p_item)
+    ""    else
+    ""        echom "length greater curidx is 1"
+    ""        let stack['items'] = [g:p_item]
+    ""    endif
+    ""else
+    ""    echom "length less curidx"
+    ""    let action = 'a'
+    ""    let stack['items'] = [g:p_item]
+    ""endif
+    ""let stack['curidx'] += 1
+
     call settagstack(winid, stack, 't')
+
 endfunction
 
 function! ToggleList()
