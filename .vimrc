@@ -244,19 +244,45 @@ function! LoclistToggle()
 endfunction
 
 function! AddToTagStack()
+    silent! if exists(g:p_item)
+        unlet g:p_item
+    endif
     let tag = expand('<cword>')
     let g:p_item = {'bufnr': bufnr(), 'from': [bufnr(), line('.'), col('.'), 0], 'tagname': tag}
     "let winid = win_getid()
     "let stack = gettagstack(winid)
     "let stack['items'] = [item]
     "call settagstack(winid, stack, 't')
+    let winid = win_getid()
+    let stack = gettagstack(winid)
+
+    if stack['length'] == stack['curidx']
+        let action = 'r'
+        let stack['items'][stack['curidx']-1] = g:p_item
+    elseif stack['length'] > stack['curidx']
+        let action = 'r'
+        if stack['curidx'] > 1
+            let stack['items'] = add(stack['items'][:stack['curidx']-2], g:p_item)
+        else
+            let stack['items'] = [g:p_item]
+        endif
+    else
+        let action = 'a'
+        let stack['items'] = add(stack['items'], g:p_item)
+        let stack['length'] += 1
+        ""let stack['items'] = [g:p_item]
+    endif
+    let stack['curidx'] += 1
+    ""call settagstack(winid, stack, action)
+    let g:p_item = stack
 endfunction
 
 function! g:RecoverTagStack()
     let winid = win_getid()
-    let stack = gettagstack(winid)
-    let stack['items'] = [g:p_item]
-
+    ""let stack = gettagstack(winid)
+    ""let stack['items'] = [g:p_item]
+    
+    let g:p_item['items'][g:p_item['length'] - 1]['bufnr'] = bufnr()
     ""if stack['length'] == stack['curidx']
     ""    echom "length equal curidx"
     ""    let action = 'r'
@@ -277,7 +303,7 @@ function! g:RecoverTagStack()
     ""endif
     ""let stack['curidx'] += 1
 
-    call settagstack(winid, stack, 't')
+    call settagstack(winid, g:p_item, 'r')
 
 endfunction
 
