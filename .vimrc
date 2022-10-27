@@ -113,7 +113,8 @@ let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_max_files = 0
 
 let Tlist_Show_One_File = 1
-let Tlist_WinWidth = 50
+let Tlist_Enable_Fold_Column = 0
+let Tlist_WinWidth = 40
 nnoremap <silent> <F7> :TlistToggle<CR>
 nnoremap <silent> <F6> :TlistOpen<CR>
 
