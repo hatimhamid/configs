@@ -79,6 +79,7 @@ call minpac#add('vim-airline/vim-airline-themes')
 call minpac#add('enricobacis/vim-airline-clock')
 call minpac#add('ctrlpvim/ctrlp.vim')
 call minpac#add('yssl/QFEnter')
+call minpac#add('yegappan/taglist')
 
 let g:fzf_layout = { 'down': '40%' }
 augroup QFSettings
@@ -111,6 +112,10 @@ let g:ctrlp_arg_map = 0
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_max_files = 0
 
+let Tlist_Show_One_File = 1
+let Tlist_WinWidth = 50
+nnoremap <silent> <F7> :TlistToggle<CR>
+nnoremap <silent> <F6> :TlistOpen<CR>
 
 nnoremap <Leader>m :Maps<CR>
 nnoremap <f2> :Commands<cr>
@@ -206,7 +211,7 @@ let g:qfenter_keymap.open_keep = ['g<CR>']
 let g:qfenter_keymap.vopen_keep = ['g<C-v>']
 let g:qfenter_keymap.hopen_keep = ['g<C-x>']
 let g:qfenter_keymap.topen_keep = ['g<C-t>']
-let g:qfenter_exclude_filetypes = ['nerdtree']
+let g:qfenter_exclude_filetypes = ['nerdtree', 'taglist']
 
 set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
 nnoremap <leader>cs :cs find s <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
