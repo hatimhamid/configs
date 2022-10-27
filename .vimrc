@@ -33,7 +33,6 @@ set cst
 set csto=1
 set so=999
 set termwinkey=<C-s>
-set dir=~/swaps
 
 " Reference chart of values:
 "   Ps = 0  -> blinking block.
@@ -118,7 +117,7 @@ nnoremap <f2> :Commands<cr>
 nnoremap <f3> :BCommits<cr>
 nnoremap <f4> :Commits<cr>
 nnoremap <f5> :ContextToggle<cr>
-nnoremap w<f5> :ContextToggleWindow<cr>
+nnoremap <leader><f5> :ContextToggleWindow<cr>
 
 nnoremap <Leader>d :NERDTreeToggle .<CR>
 nnoremap <Leader>f :NERDTreeFind<CR>
@@ -166,6 +165,8 @@ nnoremap <leader>n :next<cr>
 nnoremap <leader>p :prev<cr>
 nnoremap <leader>af :first<cr>
 nnoremap <leader>al :last<cr>
+nnoremap <leader>au :argdedupe<cr>
+nnoremap <leader>ag :argument<cr>
 nnoremap <leader>at :argdo tabedit %<cr><cr>
 nnoremap <leader>gf :args `git status -s \\| awk '$1 ~ /^M\\|A\\|U/ {print $2}'`<cr>
 nnoremap <leader>aa :argadd %<cr>
@@ -208,17 +209,17 @@ let g:qfenter_keymap.topen_keep = ['g<C-t>']
 let g:qfenter_exclude_filetypes = ['nerdtree']
 
 set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
-nnoremap <leader>cs :cs find 0 <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+nnoremap <leader>cs :cs find s <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
 "Functions calling this functions
-nnoremap <leader>cc :cs find 3 <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+nnoremap <leader>cc :cs find c <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
 "Files including this file
-nnoremap <leader>ci :cs find 8 %:t<CR><CR>:call GetCSQF()<CR>
+nnoremap <leader>ci :cs find i %:t<CR><CR>:call GetCSQF()<CR>
 "Places where symbol assigned a value
-nnoremap <leader>ca :cs find 9 <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+nnoremap <leader>ca :cs find a <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
 "Functions called by a function
-nnoremap <leader>cd :cs find 2 <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+nnoremap <leader>cd :cs find d <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
 "Find this string
-nnoremap <leader>ct :cs find 4 <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+nnoremap <leader>ct :cs find t <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
 
 function! QuickfixToggle(open = "")
     if (a:open ==? 'open' || empty(filter(getwininfo(), 'v:val.quickfix')))
