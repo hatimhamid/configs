@@ -280,6 +280,7 @@ function! AddToTagStack()
         ""let stack['items'] = [g:p_item]
     endif
     let stack['curidx'] += 1
+    let stack['length'] = len(stack['items'])
     ""call settagstack(winid, stack, action)
     let g:p_item = stack
 endfunction
