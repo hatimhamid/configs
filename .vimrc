@@ -78,8 +78,8 @@ call minpac#add('vim-airline/vim-airline')
 call minpac#add('vim-airline/vim-airline-themes')
 call minpac#add('enricobacis/vim-airline-clock')
 call minpac#add('ctrlpvim/ctrlp.vim')
-call minpac#add('yssl/QFEnter')
-call minpac#add('yegappan/taglist')
+call minpac#add('hatimhamid/QFEnter')
+call minpac#add('hatimhamid/taglist')
 
 let g:fzf_layout = { 'down': '40%' }
 augroup QFSettings
