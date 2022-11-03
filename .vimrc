@@ -118,6 +118,10 @@ let Tlist_WinWidth = 40
 nnoremap <silent> <F7> :TlistToggle<CR>
 nnoremap <silent> <F6> :TlistOpen<CR>
 
+
+""g:ycm_auto_trigger = 1
+""imap <silent> <leader>yh <Plug>(YCMToggleSignatureHelp)
+
 nnoremap <Leader>m :Maps<CR>
 nnoremap <f2> :Commands<cr>
 nnoremap <f3> :BCommits<cr>
@@ -139,6 +143,7 @@ nnoremap <leader>tt :terminal ++kill=exit ++close bash<cr><c-s>J
 tnoremap <F1> <c-s>N
 
 nnoremap \\         G
+nnoremap \r         :call ResetTagStack()<cr>
 nnoremap \t         :tags<cr>
 nnoremap <c-q>      :tag<cr>
 nnoremap <leader>w :w<cr>
@@ -256,11 +261,8 @@ function! AddToTagStack()
     endif
     let tag = expand('<cword>')
     let g:p_item = {'bufnr': bufnr(), 'from': [bufnr(), line('.'), col('.'), 0], 'tagname': tag}
-    "let winid = win_getid()
-    "let stack = gettagstack(winid)
-    "let stack['items'] = [item]
-    "call settagstack(winid, stack, 't')
     let winid = win_getid()
+
     let stack = gettagstack(winid)
 
     if stack['length'] == stack['curidx']
@@ -276,43 +278,22 @@ function! AddToTagStack()
     else
         let action = 'a'
         let stack['items'] = add(stack['items'], g:p_item)
-        let stack['length'] += 1
-        ""let stack['items'] = [g:p_item]
     endif
-    let stack['curidx'] += 1
     let stack['length'] = len(stack['items'])
-    ""call settagstack(winid, stack, action)
     let g:p_item = stack
 endfunction
 
 function! g:RecoverTagStack()
     let winid = win_getid()
-    ""let stack = gettagstack(winid)
-    ""let stack['items'] = [g:p_item]
     
-    let g:p_item['items'][g:p_item['length'] - 1]['bufnr'] = bufnr()
-    ""if stack['length'] == stack['curidx']
-    ""    echom "length equal curidx"
-    ""    let action = 'r'
-    ""    let stack['items'][stack['curidx']-1] = g:p_item
-    ""elseif stack['length'] > stack['curidx']
-    ""    let action = 'r'
-    ""    if stack['curidx'] > 1
-    ""        echom "length greater curidx"
-    ""        let stack['items'] = add(stack['items'][:stack['curidx']-2], g:p_item)
-    ""    else
-    ""        echom "length greater curidx is 1"
-    ""        let stack['items'] = [g:p_item]
-    ""    endif
-    ""else
-    ""    echom "length less curidx"
-    ""    let action = 'a'
-    ""    let stack['items'] = [g:p_item]
-    ""endif
-    ""let stack['curidx'] += 1
+    ""let g:p_item['items'][g:p_item['length'] - 1]['bufnr'] = bufnr()
 
     call settagstack(winid, g:p_item, 'r')
 
+endfunction
+
+function! ResetTagStack()
+    call settagstack(win_getid(), {'items' :[]}, 'r')
 endfunction
 
 function! ToggleList()
