@@ -27,8 +27,8 @@ set showmatch
 set foldminlines=10
 set hlsearch
 set relativenumber
-""colorscheme gruvbox
-""set background=dark
+colorscheme one
+set background=light
 set cst
 set csto=1
 set so=999
@@ -114,10 +114,9 @@ let g:ctrlp_max_files = 0
 
 let Tlist_Show_One_File = 1
 let Tlist_Enable_Fold_Column = 0
+let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_WinWidth = 40
-nnoremap <silent> <F7> :TlistToggle<CR>
-nnoremap <silent> <F6> :TlistOpen<CR>
-
+nnoremap <silent> <F6> :TlistToggle<CR>
 
 ""g:ycm_auto_trigger = 1
 ""imap <silent> <leader>yh <Plug>(YCMToggleSignatureHelp)
@@ -155,6 +154,7 @@ nnoremap <leader>v :call ToggleList()<cr>
 nnoremap <Leader>j :jumps<CR>
 nnoremap <f1> :Helptags<CR>
 
+nnoremap tt g<tab><cr>
 nnoremap <leader>to :tabonly<cr>
 nnoremap <leader>tc :tabclose<cr>
 nnoremap <leader>tn :tabnew<cr>
@@ -231,6 +231,8 @@ nnoremap <leader>ca :cs find a <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR
 nnoremap <leader>cd :cs find d <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
 "Find this string
 nnoremap <leader>ct :cs find t <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+"Find global definition
+nnoremap <leader>cg :cs find g <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
 
 function! QuickfixToggle(open = "")
     if (a:open ==? 'open' || empty(filter(getwininfo(), 'v:val.quickfix')))

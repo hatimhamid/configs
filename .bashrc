@@ -116,6 +116,19 @@ if ! shopt -oq posix; then
   fi
 fi
 
+PROMPT_COMMAND='history -a'
+
+function updateCTagsPython() {
+    find . -type f -regex ".*\.py" ! -path '*/.bootstrap/*'  >> ctagsfilelist
+    ctags -L ctagsfilelist
+    rm ctagsfilelist
+}
+
+function updateCScopePython() {
+    find . -type f -regex ".*\.py" ! -path '*/.bootstrap/*' >> cscope.files
+    cscope -q -b -k
+    rm cscope.files
+}
 function updateCTags() {
     find . -type f -regex ".*\.[ch]" > ctagsfilelist
     find . -type f -regex ".*\.cpp" >> ctagsfilelist
