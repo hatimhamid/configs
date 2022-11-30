@@ -79,7 +79,7 @@ call minpac#add('vim-airline/vim-airline-themes')
 call minpac#add('enricobacis/vim-airline-clock')
 call minpac#add('ctrlpvim/ctrlp.vim')
 call minpac#add('hatimhamid/QFEnter')
-call minpac#add('hatimhamid/taglist.vim')
+call minpac#add('preservim/tagbar')
 
 let g:fzf_layout = { 'down': '40%' }
 augroup QFSettings
@@ -116,7 +116,8 @@ let Tlist_Show_One_File = 1
 let Tlist_Enable_Fold_Column = 0
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_WinWidth = 40
-nnoremap <silent> <F6> :TlistToggle<CR>
+nnoremap <silent> <F6> :TagbarToggle f<CR>
+nnoremap <silent> <F7> :TagbarTogglePause<CR>
 
 ""g:ycm_auto_trigger = 1
 ""imap <silent> <leader>yh <Plug>(YCMToggleSignatureHelp)
