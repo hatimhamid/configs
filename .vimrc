@@ -99,6 +99,9 @@ augroup resetResetJumpListPerWindow
     au!
     autocmd WinNew * clearjumps
 augroup END
+augroup previewWindowSettings
+  "au! CursorHold *.[ch] ++nested call PreviewWord()
+augroup END
 
 "Remaps"
 "CTRL-S,K available"
@@ -137,7 +140,7 @@ nnoremap <Leader><space> :cnext<cr>
 nnoremap <leader>q :call QuickfixToggle()<cr>
 nnoremap <leader>xc :colder<cr>
 nnoremap <leader>xn :cnewer<cr>
-nnoremap <leader>l :call LoclistToggle()<cr>
+nnoremap <leader>ll :call LoclistToggle()<cr>
 
 nnoremap <leader>tt :terminal ++kill=exit ++close bash<cr><c-s>J
 tnoremap <F1> <c-s>N
@@ -156,6 +159,7 @@ nnoremap <Leader>j :jumps<CR>
 nnoremap <f1> :Helptags<CR>
 
 nnoremap tt g<tab><cr>
+tnoremap tt g<tab><cr>
 nnoremap <leader>to :tabonly<cr>
 nnoremap <leader>tc :tabclose<cr>
 nnoremap <leader>tn :tabnew<cr>
@@ -180,12 +184,13 @@ nnoremap <leader>al :last<cr>
 nnoremap <leader>au :argdedupe<cr>
 nnoremap <leader>ag :argument<cr>
 nnoremap <leader>at :argdo tabedit %<cr><cr>
-nnoremap <leader>gf :args `git status -s \\| awk '$1 ~ /^M\\|A\\|U/ {print $2}'`<cr>
+nnoremap <leader>gf :argadd `git status -s \\| awk '$1 ~ /^M\\|A\\|U/ {print $2}'`<cr>
 nnoremap <leader>aa :argadd %<cr>
 nnoremap <leader>ad :argdele %<cr>
 nnoremap <leader>al :args<cr>
 nnoremap <leader>ac :%argdelete<cr>
 nnoremap <leader>aw :arglocal<cr>
+nnoremap <leader>ak :argglobal<cr>
 
 nnoremap <leader>wa :all<cr>
 nnoremap <leader>wo :only<cr>
@@ -234,6 +239,20 @@ nnoremap <leader>cd :cs find d <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR
 nnoremap <leader>ct :cs find t <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
 "Find global definition
 nnoremap <leader>cg :cs find g <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+
+nnoremap <leader>ls :lcs find s <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+"Functions calling this functions
+nnoremap <leader>lc :lcs find c <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+"Files including this file
+nnoremap <leader>li :lcs find i %:t<CR><CR>:call GetCSQF()<CR>
+"Places where symbol assigned a value
+nnoremap <leader>la :lcs find a <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+"Functions called by a function
+nnoremap <leader>ld :lcs find d <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+"Find this string
+nnoremap <leader>lt :lcs find t <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+"Find global definition
+nnoremap <leader>lg :lcs find g <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
 
 function! QuickfixToggle(open = "")
     if (a:open ==? 'open' || empty(filter(getwininfo(), 'v:val.quickfix')))
@@ -317,6 +336,42 @@ function! GetCSQF()
     endif
 endfunction
 
+function! PreviewWord()
+    if &previewwindow			" don't do this in the preview window
+      return
+    endif
+    let w = expand("<cword>")		" get the word under cursor
+    if w =~ '\a'			" if the word contains a letter
+
+      " Delete any existing highlight before showing another tag
+      silent! wincmd P			" jump to preview window
+      if &previewwindow		" if we really get there...
+        match none			" delete existing highlight
+        wincmd p			" back to old window
+      endif
+
+      " Try displaying a matching tag for the word under the cursor
+      try
+         exe "ptag " .. w
+      catch
+        return
+      endtry
+
+      silent! wincmd P			" jump to preview window
+      if &previewwindow		" if we really get there...
+         if has("folding")
+           silent! .foldopen		" don't want a closed fold
+         endif
+         call search("$", "b")		" to end of previous line
+         let w = substitute(w, '\\', '\\\\', "")
+         call search('\<\V' .. w .. '\>')	" position cursor on match
+         " Add a match highlight to the word at this position
+        hi previewWord term=bold ctermbg=green guibg=green
+         exe 'match previewWord "\%' .. line(".") .. 'l\%' .. col(".") .. 'c\k*"'
+        wincmd p			" back to old window
+      endif
+    endif
+endfun
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeGitStatusPorcelainVersion=1
 
