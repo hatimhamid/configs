@@ -1,4 +1,6 @@
 ""set makeprg=make\ -f\ Makefile\.bzl\ dist-linux64-edge
+set tags&
 set tags+=./tags
 ""set efm =edge\/iked\/%f:%l:%c:\ error:\ %m
+cscope kill -1
 cscope add ./cscope.out

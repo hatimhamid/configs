@@ -21,7 +21,7 @@ set autoindent
 set smartindent
 syntax on
 set foldmethod=indent
-set wrapmargin=20
+"set wrapmargin=20
 set wildoptions=pum
 set showmatch
 set foldminlines=10
@@ -92,6 +92,7 @@ augroup helpWindow
 augroup END
 augroup loadLocalVimrc
     au!
+    autocmd WinEnter * silent! execute 'source'. getcwd() . '/.vimrc'
     autocmd DirChanged * silent! source .vimrc
 augroup END
 
@@ -256,24 +257,24 @@ nnoremap <leader>lg :lcs find g <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<C
 
 function! QuickfixToggle(open = "")
     if (a:open ==? 'open' || empty(filter(getwininfo(), 'v:val.quickfix')))
-        let g:wid = win_getid()
+        "let g:wid = win_getid()
         copen
         execute "normal \<c-w>J"
     else
         cclose
-        call win_gotoid(g:wid)
-        unlet g:wid
+        "call win_gotoid(g:wid)
+        "unlet g:wid
     endif
 endfunction
 function! LoclistToggle()
     if empty(filter(getwininfo(), 'v:val.loclist'))
-        let g:wid = win_getid()
+        "let g:wid = win_getid()
         lopen
         execute "normal \<c-w>J"
     else
         lclose
-        call win_gotoid(g:wid)
-        unlet g:wid
+        "call win_gotoid(g:wid)
+        "unlet g:wid
     endif
 endfunction
 
