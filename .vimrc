@@ -3,6 +3,7 @@ set encoding=UTF-8
 set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
 set backspace=indent,eol,nostop
 set number
+set nowrap
 set shiftwidth=4
 set softtabstop=4
 set expandtab
@@ -141,6 +142,8 @@ nnoremap <Leader><space> :cnext<cr>
 nnoremap <leader>q :call QuickfixToggle()<cr>
 nnoremap <leader>xc :colder<cr>
 nnoremap <leader>xn :cnewer<cr>
+nnoremap <leader>zc :lolder<cr>
+nnoremap <leader>zn :lnewer<cr>
 nnoremap <leader>ll :call LoclistToggle()<cr>
 
 nnoremap <leader>tt :terminal ++kill=exit ++close bash<cr><c-s>J
@@ -159,8 +162,8 @@ nnoremap <leader>v :call ToggleList()<cr>
 nnoremap <Leader>j :jumps<CR>
 nnoremap <f1> :Helptags<CR>
 
-nnoremap tt g<tab><cr>
-tnoremap tt g<tab><cr>
+nnoremap tt g<tab>
+tnoremap tt g<tab>
 nnoremap <leader>to :tabonly<cr>
 nnoremap <leader>tc :tabclose<cr>
 nnoremap <leader>tn :tabnew<cr>
@@ -200,6 +203,9 @@ nnoremap <c-W><c-]> :vsplit<cr><c-]>
 nnoremap <leader>ws :let g:temp_win_info=winsaveview()<cr>: let g:temp_buf_nr=bufnr()<cr><C-w>c
 nnoremap <leader>wr :vsplit<cr>:execute "e" " #"..g:temp_buf_nr<cr>: call winrestview(g:temp_win_info)<cr>
 
+"nnoremap <c-W>} :exe "ptag " .. expand("<cword>")<cr>:call getchar()<cr>:wincmd P<cr>:normal zr<cr>:wincmd p
+nnoremap <c-W>} :call PreviewWord2()<cr>
+
 inoremap {<cr> {<cr>}<Esc>O
 inoremap (<cr> (<cr>)<Esc>O
 inoremap [<cr> [<cr>]<Esc>O
@@ -227,36 +233,48 @@ let g:qfenter_keymap.topen_keep = ['g<C-t>']
 let g:qfenter_exclude_filetypes = ['nerdtree', 'taglist']
 
 set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
-nnoremap <leader>cs :cs find s <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+nnoremap <leader>cs :cs find s <C-R>=expand("<cword>")<CR><CR>:call GetCSQF('qf')<CR>
 "Functions calling this functions
-nnoremap <leader>cc :cs find c <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+nnoremap <leader>cc :cs find c <C-R>=expand("<cword>")<CR><CR>:call GetCSQF('qf')<CR>
 "Files including this file
-nnoremap <leader>ci :cs find i %:t<CR><CR>:call GetCSQF()<CR>
+nnoremap <leader>ci :cs find i %:t<CR><CR>:call GetCSQF('qf')<CR>
 "Places where symbol assigned a value
-nnoremap <leader>ca :cs find a <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+nnoremap <leader>ca :cs find a <C-R>=expand("<cword>")<CR><CR>:call GetCSQF('qf')<CR>
 "Functions called by a function
-nnoremap <leader>cd :cs find d <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+nnoremap <leader>cd :cs find d <C-R>=expand("<cword>")<CR><CR>:call GetCSQF('qf')<CR>
 "Find this string
-nnoremap <leader>ct :cs find t <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+nnoremap <leader>ct :cs find t <C-R>=expand("<cword>")<CR><CR>:call GetCSQF('qf')<CR>
 "Find global definition
-nnoremap <leader>cg :cs find g <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+nnoremap <leader>cg :cs find g <C-R>=expand("<cword>")<CR><CR>:call GetCSQF('qf')<CR>
 
-nnoremap <leader>ls :lcs find s <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+nnoremap <leader>ls :lcs find s <C-R>=expand("<cword>")<CR><CR>:call GetCSQF('ll')<CR>
 "Functions calling this functions
-nnoremap <leader>lc :lcs find c <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+nnoremap <leader>lc :lcs find c <C-R>=expand("<cword>")<CR><CR>:call GetCSQF('ll')<CR>
 "Files including this file
-nnoremap <leader>li :lcs find i %:t<CR><CR>:call GetCSQF()<CR>
+nnoremap <leader>li :lcs find i %:t<CR><CR>:call GetCSQF('ll')<CR>
 "Places where symbol assigned a value
-nnoremap <leader>la :lcs find a <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+nnoremap <leader>la :lcs find a <C-R>=expand("<cword>")<CR><CR>:call GetCSQF('ll')<CR>
 "Functions called by a function
-nnoremap <leader>ld :lcs find d <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+nnoremap <leader>ld :lcs find d <C-R>=expand("<cword>")<CR><CR>:call GetCSQF('ll')<CR>
 "Find this string
-nnoremap <leader>lt :lcs find t <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+nnoremap <leader>lt :lcs find t <C-R>=expand("<cword>")<CR><CR>:call GetCSQF('ll')<CR>
 "Find global definition
-nnoremap <leader>lg :lcs find g <C-R>=expand("<cword>")<CR><CR>:call GetCSQF()<CR>
+nnoremap <leader>lg :lcs find g <C-R>=expand("<cword>")<CR><CR>:call GetCSQF('ll')<CR>
 
+function! IsLLOpen(locdict)
+    if (1 == a:locdict.loclist && tabpagenr() == a:locdict.tabnr)
+        return 1
+    endif
+    return 0
+endfunction
+function! IsQFOpen(locdict)
+    if (1 != a:locdict.loclist && 1 == a:locdict.quickfix && tabpagenr() == a:locdict.tabnr)
+        return 1
+    endif
+    return 0
+endfunction
 function! QuickfixToggle(open = "")
-    if (a:open ==? 'open' || empty(filter(getwininfo(), 'v:val.quickfix')))
+    if (a:open ==? 'open' || empty(filter(getwininfo(), 'IsQFOpen(v:val)')))
         "let g:wid = win_getid()
         copen
         execute "normal \<c-w>J"
@@ -266,8 +284,8 @@ function! QuickfixToggle(open = "")
         "unlet g:wid
     endif
 endfunction
-function! LoclistToggle()
-    if empty(filter(getwininfo(), 'v:val.loclist'))
+function! LoclistToggle(open = "")
+    if (a:open ==? 'open' || empty(filter(getwininfo(), 'IsLLOpen(v:val)')))
         "let g:wid = win_getid()
         lopen
         execute "normal \<c-w>J"
@@ -327,16 +345,57 @@ function! ToggleList()
     endif
 endfunction
 
-function! GetCSQF()
-    if empty(getqflist())
-        echom "No results"
-    else
-        execute "normal \<C-o>"
-        execute "normal zz"
-        execute "call QuickfixToggle('open')"
+function! GetCSQF(type)
+    if (a:type ==? 'qf')
+        if empty(getqflist())
+            echom "No results"
+        else
+            execute "normal \<C-o>"
+            execute "normal zz"
+            execute "call QuickfixToggle('open')"
+        endif
+    elseif (a:type ==? 'll')
+        if empty(getloclist(0))
+            echom "No results"
+        else
+            execute "normal \<C-o>"
+            execute "normal zz"
+            execute "call LoclistToggle('open')"
+        endif
+
     endif
 endfunction
 
+function! PreviewWord2()
+    if &previewwindow			" don't do this in the preview window
+      return
+    endif
+    let w = expand("<cword>")		" get the word under cursor
+    if w =~ '\a'			" if the word contains a letter
+
+      " Delete any existing highlight before showing another tag
+      silent! wincmd P			" jump to preview window
+      if &previewwindow		" if we really get there...
+        match none			" delete existing highlight
+        wincmd p			" back to old window
+      endif
+
+      " Try displaying a matching tag for the word under the cursor
+      try
+         exe "ptag " .. w
+      catch
+        return
+      endtry
+
+      silent! wincmd P			" jump to preview window
+      if &previewwindow		" if we really get there...
+         if has("folding")
+           silent! normal zr
+         endif
+        wincmd p			" back to old window
+      endif
+    endif
+endfun
 function! PreviewWord()
     if &previewwindow			" don't do this in the preview window
       return
