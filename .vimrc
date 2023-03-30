@@ -85,7 +85,7 @@ call minpac#add('preservim/tagbar')
 let g:fzf_layout = { 'down': '40%' }
 augroup QFSettings
     au!
-    autocmd  QuickFixCmdPre * call AddToTagStack()
+    autocmd  QuickFixCmdPre * call AddToTagStack2()
 augroup END
 augroup helpWindow
     au!
@@ -296,6 +296,13 @@ function! LoclistToggle(open = "")
     endif
 endfunction
 
+function! AddToTagStack2()
+    let tag = expand('<cword>')
+    let pos = [bufnr()] + getcurpos()[1:]
+    let g:item = {'bufnr': pos[0], 'from': pos, 'tagname': tag}
+    let g:winid = win_getid()
+endfunction
+
 function! AddToTagStack()
     silent! if exists(g:p_item)
         unlet g:p_item
@@ -322,6 +329,13 @@ function! AddToTagStack()
     endif
     let stack['length'] = len(stack['items'])
     let g:p_item = stack
+endfunction
+
+function! g:RecoverTagStack2()
+    " Jump was successful, write previous location to tag stack.
+    let stack = gettagstack(g:winid)
+    let stack['items'] = [g:item]
+    call settagstack(g:winid, stack, 't')
 endfunction
 
 function! g:RecoverTagStack()
