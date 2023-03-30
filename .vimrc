@@ -303,6 +303,13 @@ function! AddToTagStack2()
     let g:winid = win_getid()
 endfunction
 
+function! g:RecoverTagStack2()
+    " Jump was successful, write previous location to tag stack.
+    let stack = gettagstack(g:winid)
+    let stack['items'] = [g:item]
+    call settagstack(win_getid(), stack, 't')
+endfunction
+
 function! AddToTagStack()
     silent! if exists(g:p_item)
         unlet g:p_item
@@ -329,13 +336,6 @@ function! AddToTagStack()
     endif
     let stack['length'] = len(stack['items'])
     let g:p_item = stack
-endfunction
-
-function! g:RecoverTagStack2()
-    " Jump was successful, write previous location to tag stack.
-    let stack = gettagstack(g:winid)
-    let stack['items'] = [g:item]
-    call settagstack(g:winid, stack, 't')
 endfunction
 
 function! g:RecoverTagStack()
