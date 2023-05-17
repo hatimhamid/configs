@@ -82,7 +82,6 @@ call minpac#add('ctrlpvim/ctrlp.vim')
 call minpac#add('hatimhamid/QFEnter')
 call minpac#add('preservim/tagbar')
 
-let g:fzf_layout = { 'down': '40%' }
 augroup QFSettings
     au!
     autocmd  QuickFixCmdPre * call AddToTagStack2()
@@ -93,8 +92,14 @@ augroup helpWindow
 augroup END
 augroup loadLocalVimrc
     au!
-    autocmd WinEnter * silent! execute 'source'. getcwd() . '/.vimrc'
-    autocmd DirChanged * silent! source .vimrc
+    autocmd WinEnter * silent! execute 'source'. getcwd() . '/.vimrc_wd' | set path& | execute "set path+="..getcwd().."/**"
+    autocmd DirChanged * silent! source .vimrc_wd | set path& | execute "set path+="..getcwd().."/**"
+augroup END
+
+augroup VIMPROVEMENT
+  autocmd!
+  " Reload my vimrc everytime I save it.
+  autocmd BufWritePost ~/.vimrc source ~/.vimrc
 augroup END
 
 augroup resetResetJumpListPerWindow
@@ -105,6 +110,7 @@ augroup previewWindowSettings
   "au! CursorHold *.[ch] ++nested call PreviewWord()
 augroup END
 
+let g:fzf_layout = { 'down': '40%' }
 "Remaps"
 "CTRL-S,K available"
 let mapleader = " "
@@ -138,12 +144,16 @@ nnoremap <Leader>d :NERDTreeToggle .<CR>
 nnoremap <Leader>f :NERDTreeFind<CR>
 
 nnoremap <Leader><right> :lnext<cr>
-nnoremap <Leader><space> :cnext<cr>
+nnoremap <Leader>x :cnext<cr>
 nnoremap <leader>q :call QuickfixToggle()<cr>
 nnoremap <leader>xc :colder<cr>
 nnoremap <leader>xn :cnewer<cr>
+nnoremap <leader>xh :chistory<cr>
+nnoremap <leader>xf :call setqflist([], 'f')<cr>
 nnoremap <leader>zc :lolder<cr>
 nnoremap <leader>zn :lnewer<cr>
+nnoremap <leader>zh :lhistory<cr>
+nnoremap <leader>zf :call setloclist([], 'f')<cr>
 nnoremap <leader>ll :call LoclistToggle()<cr>
 
 nnoremap <leader>tt :terminal ++kill=exit ++close bash<cr><c-s>J
@@ -153,7 +163,7 @@ nnoremap \\         G
 nnoremap \r         :call ResetTagStack()<cr>
 nnoremap \t         :tags<cr>
 nnoremap <c-q>      :tag<cr>
-nnoremap <leader>w :w<cr>
+nnoremap <leader><space> :w<cr>
 nnoremap <c-]> g<c-]>
 nnoremap <c-)> ]]
 nnoremap <c-(> [[
@@ -202,6 +212,7 @@ nnoremap <leader>wf :Windows<cr>
 nnoremap <c-W><c-]> :vsplit<cr><c-]>
 nnoremap <leader>ws :let g:temp_win_info=winsaveview()<cr>: let g:temp_buf_nr=bufnr()<cr><C-w>c
 nnoremap <leader>wr :vsplit<cr>:execute "e" " #"..g:temp_buf_nr<cr>: call winrestview(g:temp_win_info)<cr>
+nnoremap <leader>wx :split<cr>:execute "e" " #"..g:temp_buf_nr<cr>: call winrestview(g:temp_win_info)<cr>
 
 "nnoremap <c-W>} :exe "ptag " .. expand("<cword>")<cr>:call getchar()<cr>:wincmd P<cr>:normal zr<cr>:wincmd p
 nnoremap <c-W>} :call PreviewWord2()<cr>
@@ -232,6 +243,13 @@ let g:qfenter_keymap.hopen_keep = ['g<C-x>']
 let g:qfenter_keymap.topen_keep = ['g<C-t>']
 let g:qfenter_exclude_filetypes = ['nerdtree', 'taglist']
 
+nnoremap <leader>o :exe "e " expand("<cfile>:t")<cr>
+nnoremap <leader>le :exec "lgrep -rI \""..expand("<cWORD>").."\""..getcwd()<cr> :call GetCSQF('ll')<cr>
+nnoremap <leader>ge :exec "grep -rI "..expand("<cWORD>").." "..getcwd()<cr> :call GetCSQF('qf')<cr>
+nnoremap <leader>lw :exec "lgrep -rI "..expand("<cword>").." "..getcwd()<cr> :call GetCSQF('ll')<cr>
+nnoremap <leader>gw :exec "grep -rI "..expand("<cword>").." "..getcwd()<cr> :call GetCSQF('qf')<cr>
+nnoremap <leader>lq :set iskeyword-=_ <cr> :let sw = expand("<cword>") <cr>:set iskeyword+=_<cr>:exec "lgrep -rI "..sw.." "..getcwd()<cr> :call GetCSQF('ll')<cr>
+nnoremap <leader>gq :set iskeyword-=_ <cr>:let sw = expand("<cword>")<cr>:set iskeyword+=_<cr>:exec "grep -rI "..sw.." "..getcwd()<cr> :call GetCSQF('qf')<cr>
 set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
 nnoremap <leader>cs :cs find s <C-R>=expand("<cword>")<CR><CR>:call GetCSQF('qf')<CR>
 "Functions calling this functions
@@ -305,7 +323,7 @@ endfunction
 
 function! g:RecoverTagStack2()
     " Jump was successful, write previous location to tag stack.
-    let stack = gettagstack(g:winid)
+    let stack = gettagstack(win_getid())
     let stack['items'] = [g:item]
     call settagstack(win_getid(), stack, 't')
 endfunction
