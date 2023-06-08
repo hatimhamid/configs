@@ -1,6 +1,6 @@
-""set makeprg=make\ -f\ Makefile\.bzl\ dist-linux64-edge
+"set makeprg=make\ -f\ Makefile\.bzl\ dist-linux64-edge\ ARGS\=\"--repo_env\=GOBUILD_NSX_EDGE_IKE_ROOT\=\/tmp\/debs\/publish\/\"
 set tags&
 set tags+=./tags
-""set efm =edge\/iked\/%f:%l:%c:\ error:\ %m
+"set efm =edge\/iked\/%f:%l:%c:\ error:\ %m
 cscope kill -1
-cscope add ./cscope.out
+cscope add ./cscope.out [prefix]

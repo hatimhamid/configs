@@ -33,7 +33,7 @@ set background=light
 set cst
 set csto=1
 set so=999
-set termwinkey=<C-s>
+set termwinkey=<C-x>
 
 " Reference chart of values:
 "   Ps = 0  -> blinking block.
@@ -43,8 +43,15 @@ set termwinkey=<C-s>
 "   Ps = 4  -> steady underline.
 "   Ps = 5  -> blinking bar (xterm).
 "   Ps = 6  -> steady bar (xterm).
-let &t_SI = "\e[5 q"
-let &t_EI = "\e[1 q"
+
+if &term =~ "screen."
+    let &t_SI.="\eP\e[5 q\e\\"
+    let &t_EI.="\eP\e[1 q\e\\"
+else
+    let &t_SI = "\e[5 q"
+    let &t_EI = "\e[1 q"
+endif
+    
 
 " STATUS LINE ------------------------------------------------------------ {{{
 " Clear status line when vimrc is reloaded.
@@ -156,8 +163,8 @@ nnoremap <leader>zh :lhistory<cr>
 nnoremap <leader>zf :call setloclist([], 'f')<cr>
 nnoremap <leader>ll :call LoclistToggle()<cr>
 
-nnoremap <leader>tt :terminal ++kill=exit ++close bash<cr><c-s>J
-tnoremap <F1> <c-s>N
+nnoremap <leader>tt :terminal ++kill=exit ++close bash<cr><c-x>J
+tnoremap <F1> <c-x>N
 
 nnoremap \\         G
 nnoremap \r         :call ResetTagStack()<cr>
@@ -243,9 +250,10 @@ let g:qfenter_keymap.hopen_keep = ['g<C-x>']
 let g:qfenter_keymap.topen_keep = ['g<C-t>']
 let g:qfenter_exclude_filetypes = ['nerdtree', 'taglist']
 
-nnoremap <leader>o :exe "e " expand("<cfile>:t")<cr>
-nnoremap <leader>le :exec "lgrep -rI \""..expand("<cWORD>").."\""..getcwd()<cr> :call GetCSQF('ll')<cr>
-nnoremap <leader>ge :exec "grep -rI "..expand("<cWORD>").." "..getcwd()<cr> :call GetCSQF('qf')<cr>
+nnoremap <leader>o :set isfname-=/<cr>:normal gf<cr> :set isfname+=/<cr>
+"nnoremap <leader>o :exe "e " expand("<cfile>:t")<cr>
+nnoremap <leader>le :exec "lgrep -rI \""..expand("<cWORD>").."\" "..getcwd()<cr> :call GetCSQF('ll')<cr>
+nnoremap <leader>ge :exec "grep -rI \""..expand("<cWORD>").."\" "..getcwd()<cr> :call GetCSQF('qf')<cr>
 nnoremap <leader>lw :exec "lgrep -rI "..expand("<cword>").." "..getcwd()<cr> :call GetCSQF('ll')<cr>
 nnoremap <leader>gw :exec "grep -rI "..expand("<cword>").." "..getcwd()<cr> :call GetCSQF('qf')<cr>
 nnoremap <leader>lq :set iskeyword-=_ <cr> :let sw = expand("<cword>") <cr>:set iskeyword+=_<cr>:exec "lgrep -rI "..sw.." "..getcwd()<cr> :call GetCSQF('ll')<cr>

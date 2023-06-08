@@ -16,8 +16,8 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=10000
+HISTFILESIZE=200000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -38,6 +38,8 @@ fi
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
+    *256*)
+        color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -57,9 +59,9 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;37m\]\w\[\033[00m\]\$ \t '
+    PS1='[${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;37m\]\w\[\033[00m\]]\$ \A '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ \W \t '
+    PS1='[${debian_chroot:+($debian_chroot)}\u@\h:\w]\$ \A '
 fi
 unset color_prompt force_color_prompt
 
@@ -118,6 +120,10 @@ fi
 
 PROMPT_COMMAND='history -a'
 
+alias work='screen -D -R main'
+#if [[ -z "$STY" ]]; then
+#       screen -xRR session_name
+#fi
 function updateCTagsPython() {
     find . -type f -regex ".*\.py" ! -path '*/.bootstrap/*'  >> ctagsfilelist
     ctags -L ctagsfilelist
@@ -125,6 +131,7 @@ function updateCTagsPython() {
 }
 
 function updateCScopePython() {
+    echo > cscope.files
     find . -type f -regex ".*\.py" ! -path '*/.bootstrap/*' >> cscope.files
     cscope -q -b -k
     rm cscope.files
@@ -133,12 +140,21 @@ function updateCTags() {
     find . -type f -regex ".*\.[ch]" > ctagsfilelist
     find . -type f -regex ".*\.cpp" >> ctagsfilelist
     find . -type f -regex ".*\.hpp" >> ctagsfilelist
+    for var in "$@"
+    do
+        sed -i "/$var/d" ctagsfilelist
+    done
     ctags -L ctagsfilelist
     rm ctagsfilelist
 }
 
 function updateCScope() {
+    echo > cscope.files
     find . -type f \( -name "*.c" -o -name "*.h" -o -name "*.hpp" -o -name "*.cpp" \) > cscope.files
+    for var in "$@"
+    do
+        sed -i "/$var/d" cscope.files
+    done
     cscope -q -b -k
     rm cscope.files
 }
