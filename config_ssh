@@ -1,0 +1,7 @@
+Host dev_vm
+  HostName 10.106.2.45
+  User root
+  IdentityFile ~/.ssh/id_rsa
+  #LogLevel DEBUG1
+  RequestTTY yes
+  RemoteCommand bash -lic "work"
