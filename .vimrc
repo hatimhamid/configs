@@ -252,10 +252,10 @@ let g:qfenter_exclude_filetypes = ['nerdtree', 'taglist']
 
 nnoremap <leader>o :set isfname-=/<cr>:normal gf<cr> :set isfname+=/<cr>
 "nnoremap <leader>o :exe "e " expand("<cfile>:t")<cr>
-nnoremap <leader>le :exec "lgrep --exclude=tags --exclude=cscope -rI \""..expand("<cWORD>").."\" "..getcwd()<cr> :call GetCSQF('ll')<cr>
-nnoremap <leader>ce :exec "grep --exclude=tags --exclude=cscope -rI \""..expand("<cWORD>").."\" "..getcwd()<cr> :call GetCSQF('qf')<cr>
-nnoremap <leader>lw :exec "lgrep --exclude=tags --exclude=cscope -rI "..expand("<cword>").." "..getcwd()<cr> :call GetCSQF('ll')<cr>
-nnoremap <leader>cw :exec "grep --exclude=tags --exclude=cscope -rI "..expand("<cword>").." "..getcwd()<cr> :call GetCSQF('qf')<cr>
+nnoremap <leader>le :exec "lgrep --exclude=tags --exclude=cscope.* -rI \""..expand("<cWORD>").."\" "..getcwd()<cr> :call GetCSQF('ll')<cr>
+nnoremap <leader>ce :exec "grep --exclude=tags --exclude=cscope.* -rI \""..expand("<cWORD>").."\" "..getcwd()<cr> :call GetCSQF('qf')<cr>
+nnoremap <leader>lw :exec "lgrep --exclude=tags --exclude=cscope.* -rI "..expand("<cword>").." "..getcwd()<cr> :call GetCSQF('ll')<cr>
+nnoremap <leader>cw :exec "grep --exclude=tags --exclude=cscope.* -rI "..expand("<cword>").." "..getcwd()<cr> :call GetCSQF('qf')<cr>
 nnoremap <leader>lq :set iskeyword-=_ <cr> :let sw = expand("<cword>") <cr>:set iskeyword+=_<cr>:exec "lgrep --exclude=tags --exclude=cscope -rI "..sw.." "..getcwd()<cr> :call GetCSQF('ll')<cr>
 nnoremap <leader>cq :set iskeyword-=_ <cr>:let sw = expand("<cword>")<cr>:set iskeyword+=_<cr>:exec "grep --exclude=tags --exclude=cscope -rI "..sw.." "..getcwd()<cr> :call GetCSQF('qf')<cr>
 set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
