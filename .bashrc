@@ -178,16 +178,23 @@ alias work='screen -D -R main'
 #if [[ -z "$STY" ]]; then
 #       screen -xRR session_name
 #fi
-function updateCTagsPython() {
-    find . -type f -regex ".*\.py" ! -path '*/.bootstrap/*'  >> ctagsfilelist
-    ctags -L ctagsfilelist
-    rm ctagsfilelist
+function updateCTagsGen() {
+    ctags -R
+    for var in "$@"
+    do
+        echo hi
+        sed -i "/$var/d" ctagsfilelist
+    done
 }
 
-function updateCScopePython() {
+function updateCScopeGen() {
     echo > cscope.files
-    find . -type f -regex ".*\.py" ! -path '*/.bootstrap/*' >> cscope.files
-    cscope -q -b -k
+    find . -type f -regex ".*\.py" >> cscope.files
+    for var in "$@"
+    do
+        sed -i "/$var/d" cscope.files
+    done
+    cscope -q -b
     rm cscope.files
 }
 function updateCTags() {
@@ -209,7 +216,7 @@ function updateCScope() {
     do
         sed -i "/$var/d" cscope.files
     done
-    cscope -q -b -k
+    cscope -q -b
     rm cscope.files
 }
 

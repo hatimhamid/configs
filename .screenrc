@@ -20,3 +20,31 @@ hardstatus alwayslastline
 #hardstatus string '%{= Kd} %{= Kd}%-w%{= Kr}[%{= KW}%n %t%{= Kr}]%{= Kd}%+w %-= %{KG} %H%{KW}|%{KY}%101`%{KW}|%D %M %d %Y%{= Kc} %C%A%{-}'
 #hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{W} %d/%m %{W}%c %{g}]'
 hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= w}%?%-Lw%?%{= R}%n*%f %t%?%{= R}(%u)%?%{= w}%+Lw%?%= %{= g}][ %{y}Load: %l %{g}][%{W}%Y-%m-%d %{W}%c:%s %{g}]'
+
+# Switch between layouts with Alt+Number
+bindkey "^[0" layout select 0
+bindkey "^[1" layout select 1
+bindkey "^[2" layout select 2
+bindkey "^[3" layout select 3
+bindkey "^[4" layout select 4
+bindkey "^[5" layout select 5
+bindkey "^[6" layout select 6
+bindkey "^[7" layout select 7
+bindkey "^[8" layout select 8
+bindkey "^[9" layout select 9
+
+# Switch to previous layout
+bind , layout prev
+
+# Switch to next layout
+bind . layout next
+
+# Show all layouts
+bind s layout show
+
+bind K kill
+
+bind j focus down
+bind k focus up
+bind l focus right
+bind h focus left
