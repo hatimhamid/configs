@@ -1,0 +1,167 @@
+# Copyright (C) 2023 VMware, Inc. All rights reserved.
+# -- VMware Confidential
+# Description: Script to run and update coverage details to a local/remote
+#              machine and also calls coverage_run_and_update.py to update
+#              the web server file.
+# Author     : Hatim Hamid <hhamid@vmware.com>
+# Version    : 1.0.0
+#
+#!/bin/bash
+
+demo_usage () {
+    echo "Usage: ${0##*/} [-h] [-b branch name [-v version]] <nsx dir>"
+    echo ""
+    echo "Note: [-b|v] cmdline options will override any config file values."
+}
+
+graceful_exit () {
+    ret_val=-1
+    case $1 in
+        INVALID_PATH | INVALID_FILE)
+            echo -e "$2 doesnt exist."
+            if [[ -n $3 ]]; then
+                echo -e $3
+            fi
+            ;;
+        FILE_NOT_FOUND)
+            echo -e "$2 not found"
+            ;;
+        MISSING_VAR)
+            echo -e "$2 variable isnt defined!"
+            if [[ -n $3 ]]; then
+                echo -e $3
+            fi
+            ;;
+        INVALID_USAGE)
+            demo_usage
+            ret_val=2
+            ;;
+        SUCCESS)
+            ret_val=0
+            ;;
+        *)
+            echo -e $1
+            ;;
+    esac
+    exit $ret_val
+}
+
+#Process cmd line options
+while getopts ":hb:v:" option; do
+    case $option in
+	h) # display Help
+	    demo_usage
+	    graceful_exit SUCCESS
+            ;;
+	v) #Branch version
+	    OPT_BRANCH_VER=${OPTARG}
+	    ;;
+	b) #Branch Name
+	    OPT_BRANCH_NAME=${OPTARG}
+	    ;;
+	:) # Invalid option
+            echo "Optional argument -$OPTARG requires an argument."
+	    graceful_exit INVALID_USAGE
+            ;;
+	?) # Invalid option
+	    graceful_exit INVALID_USAGE
+            ;;
+    esac
+done
+
+shift $((OPTIND-1))
+
+#Check mandatory args
+if [[ $# -lt 1 ]]; then
+    graceful_exit INVALID_USAGE
+fi
+
+export SCRIPT_DIR=$(dirname $0)
+
+cd $SCRIPT_DIR
+SCRIPT_DIR=$(pwd)
+
+#Safety checks
+export IKED_DIR=$1/edge/iked
+if [[ ! -d $IKED_DIR ]]; then
+    graceful_exit INVALID_PATH $1 "Not a root NSX dir!"
+elif [[ ! -f $SCRIPT_DIR/coverage_run_and_update.config ]]; then
+    graceful_exit FILE_NOT_FOUND $SCRIPT_DIR/coverage_run_and_update.py
+elif [[ ! -f $SCRIPT_DIR/row_skeleton ]]; then
+    graceful_exit FILE_NOT_FOUND $SCRIPT_DIR/row_skeleton
+fi
+
+#Read Config file
+. ${SCRIPT_DIR}/coverage_run_and_update.config
+
+#Check report dir
+if [[ ! -n $REPORT_DIR ]]; then
+    graceful_exit MISSING_VAR REPORT_DIR "Check ${0}.config file."
+fi
+
+#Run Coverage
+cd $IKED_DIR
+make -f Makefile.bzl coverage-html-linux64-edge
+if [[ $? -ne 0 ]]; then
+    graceful_exit "Coverage Failed! Exiting..."
+fi
+
+#Check branch name and version
+export BRANCH_VER=${OPT_BRANCH_VER:-$BRANCH_VER}
+export BRANCH_NAME=${OPT_BRANCH_NAME:-$BRANCH_NAME}
+if [[ -z $BRANCH_NAME ]]; then
+    graceful_exit MISSING_VAR BRANCH_NAME "Check ${0}.config file."
+fi
+
+#Create temp local dir
+export LOC_DIR=$IKED_DIR/temp_cov_files
+mkdir -p $LOC_DIR
+cd $LOC_DIR
+
+#Create folder
+export FOLDER_NAME="${BRANCH_NAME}_$(date +"%d_%m_%Y")"
+mkdir $FOLDER_NAME
+
+#Move the coverage data to Local dir
+cp -r  $IKED_DIR/build/coverage-linux64-edge/html/iked \
+$IKED_DIR/build/coverage-linux64-edge/html/quicksec $LOC_DIR/$FOLDER_NAME
+
+#Copy the main index.html to Local dir
+if [[ -z $REPORT_DIR ]]; then
+    graceful_exit MISSING_VAR $REPORT_DIR "Check ${0}.config file."
+fi
+if [[ -n $REMOTE_MACHINE ]]; then
+    echo "Copying server html file from remote machine..."
+    scp -q $REMOTE_MACHINE:$REPORT_DIR/index.html $LOC_DIR
+else
+    cp $REPORT_DIR/index.html $LOC_DIR
+fi
+if [[ $? -ne 0 ]]; then
+    graceful_exit INVALID_FILE index.html "Check path!"
+fi
+
+#Init some constants for the python script
+export IKED_COV_FILE=${LOC_DIR}/$FOLDER_NAME/iked/index.html
+export QUICKSEC_COV_FILE=${LOC_DIR}/$FOLDER_NAME/quicksec/index.html
+export MAIN_HTML_FILE=${LOC_DIR}/index.html
+export NEW_TAG_FILE=${SCRIPT_DIR}/row_skeleton
+
+export IKED_REL=${IKED_COV_FILE##${LOC_DIR}}
+export QUICKSEC_REL=${QUICKSEC_COV_FILE##${LOC_DIR}}
+
+#Do what you came for
+echo "Executing operations..."
+python ${SCRIPT_DIR}/coverage_run_and_update.py
+
+#Move the index.html and the coverage folder back to orig location
+if [[ -n $REMOTE_MACHINE ]]; then
+    echo "Copying server html file and coverage data to remote machine..."
+    scp -qr $LOC_DIR/index.html $LOC_DIR/$FOLDER_NAME $REMOTE_MACHINE:$REPORT_DIR
+else
+    cp -r $LOC_DIR/index.html $LOC_DIR/$FOLDER_NAME $REPORT_DIR
+fi
+
+#Cleanup
+rm -rf $LOC_DIR
+echo "Done!"
+graceful_exit SUCCESS

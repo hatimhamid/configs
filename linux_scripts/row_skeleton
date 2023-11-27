@@ -1,0 +1,18 @@
+<tr>
+  <td class="row"></td>
+  <td class="row"></td>
+  <td class="coverBar" align="center">
+      <table border=0 cellspacing=0 cellpadding=1><tr><td><img src="amber.png"
+                  width=60 height=10 alt="60.7%"><img src="gray.png" width=40
+                  height=10 alt="60.7%"></td></tr></table>
+  </td>
+  <td class="coverPerLo"><a href="">60.7&nbsp;%</a></td>
+  <td class="coverBar" align="center">
+      <table border=0 cellspacing=0 cellpadding=1><tr><td><img src="ruby.png"
+                  width=35 height=10 alt="34.6%"><img src="gray.png" width=65
+                  height=10 alt="34.6%"></td></tr></table>
+  </td>
+  <td class="coverPerLo"><a href="">34.6&nbsp%</a></td>
+  <td class="row"></td>
+</tr>
+<tr>
