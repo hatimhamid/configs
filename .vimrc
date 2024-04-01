@@ -71,6 +71,7 @@ endif
 
 packadd minpac
 call minpac#init()
+call minpac#add('ycm-core/YouCompleteMe')
 call minpac#add('k-takata/minpac', {'type': 'opt'})
 call minpac#add('tpope/vim-obsession')
 call minpac#add('junegunn/fzf')
@@ -134,6 +135,12 @@ let Tlist_Show_One_File = 1
 let Tlist_Enable_Fold_Column = 0
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_WinWidth = 40
+let g:ycm_enable_semantic_highlighting=1
+let g:ycm_enable_inlay_hints=0
+let g:ycm_clear_inlay_hints_in_insert_mode=1
+nnoremap <silent> <Leader>yh <Plug>(YCMToggleInlayHints)
+nnoremap <silent> <Leader>yp <plug>(YCMHover)
+
 nnoremap <silent> <F6> :TagbarToggle f<CR>
 nnoremap <silent> <F7> :TagbarTogglePause<CR>
 

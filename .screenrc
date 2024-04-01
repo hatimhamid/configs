@@ -20,7 +20,7 @@ hardstatus alwayslastline
 #hardstatus string '%{= Kd} %{= Kd}%-w%{= Kr}[%{= KW}%n %t%{= Kr}]%{= Kd}%+w %-= %{KG} %H%{KW}|%{KY}%101`%{KW}|%D %M %d %Y%{= Kc} %C%A%{-}'
 #hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{W} %d/%m %{W}%c %{g}]'
 #hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= w}%?%-Lw%?%{= R}%n*%f %t%?%{= R}(%u)%?%{= w}%+Lw%?%= %{= g}][ %{y}Load: %l %{g}][%{W}%Y-%m-%d %{W}%c:%s %{g}]'
-hardstatus string '%{= kG}[%{G}%H%? %1`%?%{g}][%= %{= kw}%-w%{+b Yk} %n*%t%?(%u)%? %{-}%+w %=%{g}][ %{Y}Load: %l %{g}][%{W}%d-%m-%Y %{W}%c:%s %{g}]'
+hardstatus string '%{= kG}[%{G}%H%? %1`%?%{g}][%= %{= kw}%-w%{+b wb} %n*%t%?(%u)%? %{-}%+w %=%{g}][ %{Y}Load: %l %{g}][%{W}%d-%m-%Y %{W}%c:%s %{g}]'
 
 # Switch between layouts with Alt+Number
 bindkey "l0" layout select 0
