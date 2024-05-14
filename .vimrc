@@ -88,7 +88,9 @@ call minpac#add('vim-airline/vim-airline-themes')
 call minpac#add('enricobacis/vim-airline-clock')
 call minpac#add('ctrlpvim/ctrlp.vim')
 call minpac#add('hatimhamid/QFEnter')
-call minpac#add('preservim/tagbar')
+"call minpac#add('preservim/tagbar')
+call minpac#add('vim-scripts/taglist.vim')
+call minpac#add('gcmt/taboo.vim')
 
 augroup QFSettings
     au!
@@ -131,21 +133,24 @@ let g:ctrlp_arg_map = 0
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_max_files = 0
 
-let Tlist_Show_One_File = 1
-let Tlist_Enable_Fold_Column = 0
-let Tlist_GainFocus_On_ToggleOpen = 1
-let Tlist_WinWidth = 40
+
+let Tlist_Use_Right_Window = 1
+
 let g:ycm_enable_semantic_highlighting=1
 let g:ycm_enable_inlay_hints=0
 let g:ycm_clear_inlay_hints_in_insert_mode=1
 nnoremap <silent> <Leader>yh <Plug>(YCMToggleInlayHints)
 nnoremap <silent> <Leader>yp <plug>(YCMHover)
 
-nnoremap <silent> <F6> :TagbarToggle f<CR>
+nnoremap <silent> <F6> :TlistToggle<CR>
 nnoremap <silent> <F7> :TagbarTogglePause<CR>
 
-""g:ycm_auto_trigger = 1
-""imap <silent> <leader>yh <Plug>(YCMToggleSignatureHelp)
+let g:ycm_enable_semantic_highlighting=1
+let g:ycm_auto_trigger = 1
+imap <silent> <leader>yh <Plug>(YCMToggleSignatureHelp)
+let g:ycm_enable_inlay_hints=1
+
+set sessionoptions+=tabpages,globals
 
 nnoremap <Leader>m :Maps<CR>
 nnoremap <f2> :Commands<cr>
