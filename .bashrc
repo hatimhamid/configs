@@ -178,29 +178,11 @@ alias work='screen -D -R main'
 #if [[ -z "$STY" ]]; then
 #       screen -xRR session_name
 #fi
-function updateCTagsGen() {
-    ctags -R
-    for var in "$@"
-    do
-        echo hi
-        sed -i "/$var/d" ctagsfilelist
-    done
-}
 
-function updateCScopeGen() {
-    echo > cscope.files
-    find . -type f -regex ".*\.py" >> cscope.files
-    for var in "$@"
-    do
-        sed -i "/$var/d" cscope.files
-    done
-    cscope -q -b
-    rm cscope.files
-}
 function updateCTags() {
-    find . -type f -regex ".*\.[ch]" > ctagsfilelist
-    find . -type f -regex ".*\.cpp" >> ctagsfilelist
-    find . -type f -regex ".*\.hpp" >> ctagsfilelist
+    #find . -type f -regex ".*\.[ch]" > ctagsfilelist
+    #find . -type f -regex ".*\.cpp" >> ctagsfilelist
+    find . -type f -regex '.*\.\(c\|h\|cpp\|hpp\|cxx\|hxx\|hh\|cc\)' > ctagsfilelist
     for var in "$@"
     do
         sed -i "/$var/d" ctagsfilelist
@@ -210,8 +192,8 @@ function updateCTags() {
 }
 
 function updateCScope() {
-    echo > cscope.files
-    find . -type f \( -name "*.c" -o -name "*.h" -o -name "*.hpp" -o -name "*.cpp" \) > cscope.files
+    #find . -type f \( -name "*.c" -o -name "*.h" -o -name "*.hpp" -o -name "*.cpp" \) > cscope.files
+    find . -type f -regex '.*\.\(c\|h\|cpp\|hpp\|cxx\|hxx\|hh\|cc\)' > cscope.files
     for var in "$@"
     do
         sed -i "/$var/d" cscope.files

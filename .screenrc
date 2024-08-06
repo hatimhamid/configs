@@ -49,5 +49,5 @@ bind j focus down
 bind k focus up
 bind l focus right
 bind h focus left
-bind ; focus next
-bind \' focus prev
+bind \' focus next
+bind ; focus prev

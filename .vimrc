@@ -96,14 +96,20 @@ augroup QFSettings
     au!
     autocmd  QuickFixCmdPre * call AddToTagStack2()
 augroup END
-augroup helpWindow
-    au!
-    autocmd! FileType help wincmd L
-augroup END
+""augroup helpWindow
+""    au!
+""    autocmd! FileType help wincmd L
+""augroup END
 augroup loadLocalVimrc
     au!
-    autocmd WinEnter * silent! execute 'source'. getcwd() . '/.vimrc_wd' | set path& | execute "set path+="..getcwd().."/**"
-    autocmd DirChanged * silent! source .vimrc_wd | set path& | execute "set path+="..getcwd().."/**"
+    autocmd WinEnter * silent! execute 'source'. getcwd() . '/.vimrc_project' | set path& | execute "set path+="..getcwd().."/**"
+    autocmd DirChanged * silent! source .vimrc_project | set path& | execute "set path+="..getcwd().."/**"
+augroup END
+
+augroup filtypeSettings
+    au!
+    autocmd FileType * :set iskeyword&
+    "autocmd FileType make :set iskeyword+=\/
 augroup END
 
 augroup VIMPROVEMENT
