@@ -3,4 +3,5 @@ set tags&
 set tags+=./tags
 "set efm =edge\/iked\/%f:%l:%c:\ error:\ %m
 cscope kill -1
-cscope add ./cscope.out "[prefix]
+cscope add ./cscope.out
+"cscope add ./cscope.out "[prefix]
