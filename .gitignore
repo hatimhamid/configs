@@ -1,0 +1,6 @@
+*.sw?
+cscope*
+tags
+.vimrc*
+*.orig
+*.vscode/
