@@ -1,5 +1,5 @@
-set history filename ~/.gdbhistory
+set history filename ~/.gdb_history
 set history save on
 set history size unlimited
 set history remove-duplicates unlimited
-source ~/.gdbbreaks
+source ~/.gdb_breaks
