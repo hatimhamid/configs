@@ -4,9 +4,9 @@ set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
 set backspace=indent,eol,nostop
 set number
 set nowrap
-set shiftwidth=4
-set softtabstop=4
-set expandtab
+"set shiftwidth=4
+"set softtabstop=4
+"set expandtab
 set cursorline
 set undofile
 set undodir=~/.vim/
@@ -236,6 +236,7 @@ nnoremap <leader>wo :only<cr>
 nnoremap <leader>wf :Windows<cr>
 nnoremap <c-W><c-]> :vsplit<cr><c-]>
 nnoremap <leader>ws :let g:temp_win_info=winsaveview()<cr>: let g:temp_buf_nr=bufnr()<cr><C-w>c
+nnoremap <leader>wc :let g:temp_win_info=winsaveview()<cr>: let g:temp_buf_nr=bufnr()<cr>
 nnoremap <leader>wr :vsplit<cr>:execute "e" " #"..g:temp_buf_nr<cr>: call winrestview(g:temp_win_info)<cr>
 nnoremap <leader>wx :split<cr>:execute "e" " #"..g:temp_buf_nr<cr>: call winrestview(g:temp_win_info)<cr>
 
@@ -270,10 +271,10 @@ let g:qfenter_exclude_filetypes = ['nerdtree', 'taglist']
 
 nnoremap <leader>o :set isfname-=/<cr>:normal gf<cr> :set isfname+=/<cr>
 "nnoremap <leader>o :exe "e " expand("<cfile>:t")<cr>
-nnoremap <leader>le :exec "lgrep --exclude=tags --exclude=cscope.* -rI \""..expand("<cWORD>").."\" "..getcwd()<cr> :call GetCSQF('ll')<cr>
-nnoremap <leader>ce :exec "grep --exclude=tags --exclude=cscope.* -rI \""..expand("<cWORD>").."\" "..getcwd()<cr> :call GetCSQF('qf')<cr>
-nnoremap <leader>lw :exec "lgrep --exclude=tags --exclude=cscope.* -rI "..expand("<cword>").." "..getcwd()<cr> :call GetCSQF('ll')<cr>
-nnoremap <leader>cw :exec "grep --exclude=tags --exclude=cscope.* -rI "..expand("<cword>").." "..getcwd()<cr> :call GetCSQF('qf')<cr>
+nnoremap <leader>le :exec "lgrep --exclude={tags,cscope*} --exclude-dir={.git} -rI \""..expand("<cWORD>").."\" "..getcwd()<cr> :call GetCSQF('ll')<cr>
+nnoremap <leader>ce :exec "grep --exclude={tags,cscope*} --exclude-dir={.git} -rI \""..expand("<cWORD>").."\" "..getcwd()<cr> :call GetCSQF('qf')<cr>
+nnoremap <leader>lw :exec "lgrep --exclude={tags,cscope*} --exclude-dir={.git} -rI "..expand("<cword>").." "..getcwd()<cr> :call GetCSQF('ll')<cr>
+nnoremap <leader>cw :exec "grep --exclude={tags,cscope*} --exclude-dir={.git} -rI "..expand("<cword>").." "..getcwd()<cr> :call GetCSQF('qf')<cr>
 nnoremap <leader>lq :set iskeyword-=_ <cr> :let sw = expand("<cword>") <cr>:set iskeyword+=_<cr>:exec "lgrep --exclude=tags --exclude=cscope -rI "..sw.." "..getcwd()<cr> :call GetCSQF('ll')<cr>
 nnoremap <leader>cq :set iskeyword-=_ <cr>:let sw = expand("<cword>")<cr>:set iskeyword+=_<cr>:exec "grep --exclude=tags --exclude=cscope -rI "..sw.." "..getcwd()<cr> :call GetCSQF('qf')<cr>
 set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
