@@ -7,6 +7,7 @@ set nowrap
 "set shiftwidth=4
 "set softtabstop=4
 "set expandtab
+set tabstop=4
 set cursorline
 set undofile
 set undodir=~/.vim/
