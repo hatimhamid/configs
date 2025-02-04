@@ -4,7 +4,7 @@ set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
 set backspace=indent,eol,nostop
 set number
 set nowrap
-"set shiftwidth=4
+set shiftwidth=0
 "set softtabstop=4
 "set expandtab
 set tabstop=4
