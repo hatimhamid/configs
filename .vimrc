@@ -29,11 +29,11 @@ set showmatch
 set foldminlines=10
 set hlsearch
 set relativenumber
-colorscheme one
+colorscheme zellner
 set background=light
 set cst
 set csto=1
-set so=999
+"set so=999
 set termwinkey=<C-x>
 
 " Reference chart of values:
@@ -52,7 +52,7 @@ else
     let &t_SI = "\e[5 q"
     let &t_EI = "\e[1 q"
 endif
-    
+
 
 " STATUS LINE ------------------------------------------------------------ {{{
 " Clear status line when vimrc is reloaded.
@@ -84,9 +84,9 @@ call minpac#add('wellle/context.vim')
 call minpac#add('morhetz/gruvbox')
 call minpac#add('Xuyuanp/nerdtree-git-plugin')
 call minpac#add('rakr/vim-one')
-call minpac#add('vim-airline/vim-airline')
-call minpac#add('vim-airline/vim-airline-themes')
-call minpac#add('enricobacis/vim-airline-clock')
+"call minpac#add('vim-airline/vim-airline')
+"call minpac#add('vim-airline/vim-airline-themes')
+"call minpac#add('enricobacis/vim-airline-clock')
 call minpac#add('ctrlpvim/ctrlp.vim')
 call minpac#add('hatimhamid/QFEnter')
 "call minpac#add('preservim/tagbar')
@@ -122,9 +122,6 @@ augroup END
 augroup resetResetJumpListPerWindow
     au!
     autocmd WinNew * clearjumps
-augroup END
-augroup previewWindowSettings
-  "au! CursorHold *.[ch] ++nested call PreviewWord()
 augroup END
 
 let g:fzf_layout = { 'down': '40%' }
@@ -272,12 +269,14 @@ let g:qfenter_exclude_filetypes = ['nerdtree', 'taglist']
 
 nnoremap <leader>o :set isfname-=/<cr>:normal gf<cr> :set isfname+=/<cr>
 "nnoremap <leader>o :exe "e " expand("<cfile>:t")<cr>
-nnoremap <leader>le :exec "lgrep --exclude={tags,cscope*} --exclude-dir={.git} -rI \""..expand("<cWORD>").."\" "..getcwd()<cr> :call GetCSQF('ll')<cr>
-nnoremap <leader>ce :exec "grep --exclude={tags,cscope*} --exclude-dir={.git} -rI \""..expand("<cWORD>").."\" "..getcwd()<cr> :call GetCSQF('qf')<cr>
-nnoremap <leader>lw :exec "lgrep --exclude={tags,cscope*} --exclude-dir={.git} -rI "..expand("<cword>").." "..getcwd()<cr> :call GetCSQF('ll')<cr>
-nnoremap <leader>cw :exec "grep --exclude={tags,cscope*} --exclude-dir={.git} -rI "..expand("<cword>").." "..getcwd()<cr> :call GetCSQF('qf')<cr>
-nnoremap <leader>lq :set iskeyword-=_ <cr> :let sw = expand("<cword>") <cr>:set iskeyword+=_<cr>:exec "lgrep --exclude=tags --exclude=cscope -rI "..sw.." "..getcwd()<cr> :call GetCSQF('ll')<cr>
-nnoremap <leader>cq :set iskeyword-=_ <cr>:let sw = expand("<cword>")<cr>:set iskeyword+=_<cr>:exec "grep --exclude=tags --exclude=cscope -rI "..sw.." "..getcwd()<cr> :call GetCSQF('qf')<cr>
+let g:grep_opts = "--exclude={tags,cscope*} --exclude-dir={.git} -rIn"
+let &grepprg = 'grep ' . g:grep_opts
+nnoremap <leader>le :exec "lgrep \""..expand("<cWORD>").."\" "..getcwd()<cr> :call GetCSQF('ll')<cr>
+nnoremap <leader>ce :exec "grep \""..expand("<cWORD>").."\" "..getcwd()<cr> :call GetCSQF('qf')<cr>
+nnoremap <leader>lw :exec "lgrep "..expand("<cword>").." "..getcwd()<cr> :call GetCSQF('ll')<cr>
+nnoremap <leader>cw :exec "grep "..expand("<cword>").." "..getcwd()<cr> :call GetCSQF('qf')<cr>
+nnoremap <leader>lq :set iskeyword-=_ <cr>:let sw = expand("<cword>")<cr>:set iskeyword+=_<cr>:exec "lgrep "..sw.." "..getcwd()<cr> :call GetCSQF('ll')<cr>
+nnoremap <leader>cq :set iskeyword-=_ <cr>:let sw = expand("<cword>")<cr>:set iskeyword+=_<cr>:exec "grep "..sw.." "..getcwd()<cr> :call GetCSQF('qf')<cr>
 set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
 nnoremap <leader>cs :cs find s <C-R>=expand("<cword>")<CR><CR>:call GetCSQF('qf')<CR>
 "Functions calling this functions
@@ -386,7 +385,7 @@ endfunction
 
 function! g:RecoverTagStack()
     let winid = win_getid()
-    
+
     ""let g:p_item['items'][g:p_item['length'] - 1]['bufnr'] = bufnr()
 
     call settagstack(winid, g:p_item, 'r')
