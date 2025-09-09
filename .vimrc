@@ -33,7 +33,7 @@ colorscheme zellner
 set background=light
 set cst
 set csto=1
-"set so=999
+set so=999
 set termwinkey=<C-x>
 
 " Reference chart of values:
@@ -70,28 +70,33 @@ endif
 "" Show the status on the second to last line.
 "set laststatus=2
 
-packadd minpac
-call minpac#init()
-call minpac#add('ycm-core/YouCompleteMe')
-call minpac#add('k-takata/minpac', {'type': 'opt'})
-call minpac#add('tpope/vim-obsession')
-call minpac#add('junegunn/fzf')
-call minpac#add('junegunn/fzf.vim')
-call minpac#add('preservim/nerdtree')
-call minpac#add('tpope/vim-fugitive')
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin()
+Plug 'k-takata/minpac'
+Plug 'tpope/vim-obsession'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'preservim/nerdtree'
+Plug 'tpope/vim-fugitive'
 "call minpac#add('ycm-core/YouCompleteMe', {'type': 'opt'})
-call minpac#add('wellle/context.vim')
-call minpac#add('morhetz/gruvbox')
-call minpac#add('Xuyuanp/nerdtree-git-plugin')
-call minpac#add('rakr/vim-one')
+Plug 'wellle/context.vim'
+Plug 'morhetz/gruvbox'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'rakr/vim-one'
 "call minpac#add('vim-airline/vim-airline')
 "call minpac#add('vim-airline/vim-airline-themes')
 "call minpac#add('enricobacis/vim-airline-clock')
-call minpac#add('ctrlpvim/ctrlp.vim')
-call minpac#add('hatimhamid/QFEnter')
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'hatimhamid/QFEnter'
 "call minpac#add('preservim/tagbar')
-call minpac#add('vim-scripts/taglist.vim')
-call minpac#add('gcmt/taboo.vim')
+Plug 'vim-scripts/taglist.vim'
+Plug 'gcmt/taboo.vim'
+call plug#end()
 
 augroup QFSettings
     au!
