@@ -1,7 +1,7 @@
 *.sw?
-cscope*
 tags
 .vimrc*
 *.orig
 *.vscode/
+cscope.*
 *.tar.*
