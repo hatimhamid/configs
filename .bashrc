@@ -202,4 +202,5 @@ function updateCScope() {
     rm cscope.files
 }
 
+PATH="${HOME}/.local/bin:${HOME}/.local/usr/bin:${HOME}/.local/usr/local/bin:$PATH"
 TZ='Asia/Kolkata'; export TZ

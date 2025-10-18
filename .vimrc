@@ -241,6 +241,7 @@ nnoremap <leader>wx :split<cr>:execute "e" " #"..g:temp_buf_nr<cr>: call winrest
 nnoremap <c-W>} :call PreviewWord2()<cr>
 
 inoremap {<cr> {<cr>}<Esc>O
+inoremap < <><Esc>i
 inoremap (<cr> (<cr>)<Esc>O
 inoremap [<cr> [<cr>]<Esc>O
 inoremap "<cr> "<cr>"<Esc>O
